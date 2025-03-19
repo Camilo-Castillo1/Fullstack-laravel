@@ -1,0 +1,38 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Gestión de Inventario",
+        "description": "Documentación de la API con Swagger",
+        "contact": {
+            "email": "soporte@tuempresa.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost"
+        }
+    ],
+    "paths": {
+        "/api/ejemplo": {
+            "get": {
+                "tags": [
+                    "Ejemplo"
+                ],
+                "summary": "Ejemplo de endpoint",
+                "operationId": "65c6458b0d5ab84f081f5658b5e9223e",
+                "responses": {
+                    "200": {
+                        "description": "Respuesta exitosa"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Ejemplo",
+            "description": "Ejemplo"
+        }
+    ]
+}
