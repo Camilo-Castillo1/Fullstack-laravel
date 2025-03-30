@@ -17,7 +17,7 @@ class Usuario extends Model
         'password',
         'telefono',
         'estado',
-        'id_rol' // 👈 Asegúrate de incluir esto
+        'id_rol' // Se agrega el campo id_rol
     ];
 
     public function rol()

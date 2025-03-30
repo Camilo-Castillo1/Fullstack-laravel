@@ -5,10 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 
+/**
+* @OA\Info(
+*     title="API de Categorías",
+*     version="1.0",
+*     description="Documentación de la API para el manejo de categorías"
+* )
+*
+* * @OA\Server(
+*     url="{{scheme}}://127.0.0.1:8000"
+* )
+
+*/
+
+/**
+ * @OA\Schema(
+ *     schema="Categoria",
+ *     type="object",
+ *     required={"nombre"},
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="nombre", type="string", example="Alimentos"),
+ *     @OA\Property(property="descripcion", type="string", example="Productos comestibles"),
+ *     @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-25T12:00:00Z"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-25T12:00:00Z")
+ * )
+ */
 class CategoriaController extends Controller
 {
     /**
-     * 📌 Listar todas las categorías.
+     * Obtener todas las categorías
+     *
+     * @OA\Get(
+     *     path="/categorias",
+     *     tags={"Categorias"},
+     *     summary="Lista todas las categorías",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de categorías",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Categoria")
+     *         )
+     *     )
+     * )
      */
     public function index()
     {
@@ -16,7 +55,29 @@ class CategoriaController extends Controller
     }
 
     /**
-     * 📌 Crear una nueva categoría.
+     * Crear una nueva categoría
+     *
+     * @OA\Post(
+     *     path="/categorias",
+     *     tags={"Categorias"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nombre"},
+     *             @OA\Property(property="nombre", type="string", example="Alimentos"),
+     *             @OA\Property(property="descripcion", type="string", example="Productos comestibles")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Categoría creada",
+     *         @OA\JsonContent(ref="#/components/schemas/Categoria")
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Datos inválidos"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -31,7 +92,27 @@ class CategoriaController extends Controller
     }
 
     /**
-     * 📌 Obtener una categoría por ID.
+     * Mostrar una categoría por ID
+     *
+     * @OA\Get(
+     *     path="/categorias/{id}",
+     *     tags={"Categorias"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Categoría encontrada",
+     *         @OA\JsonContent(ref="#/components/schemas/Categoria")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Categoría no encontrada"
+     *     )
+     * )
      */
     public function show($id)
     {
@@ -45,7 +126,34 @@ class CategoriaController extends Controller
     }
 
     /**
-     * 📌 Actualizar una categoría existente.
+     * Actualizar una categoría existente
+     *
+     * @OA\Put(
+     *     path="/categorias/{id}",
+     *     tags={"Categorias"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nombre", type="string", example="Bebidas"),
+     *             @OA\Property(property="descripcion", type="string", example="Líquidos embotellados")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Categoría actualizada",
+     *         @OA\JsonContent(ref="#/components/schemas/Categoria")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Categoría no encontrada"
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -66,7 +174,29 @@ class CategoriaController extends Controller
     }
 
     /**
-     * 📌 Eliminar una categoría.
+     * Eliminar una categoría
+     *
+     * @OA\Delete(
+     *     path="/categorias/{id}",
+     *     tags={"Categorias"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Categoría eliminada",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Categoría eliminada correctamente")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Categoría no encontrada"
+     *     )
+     * )
      */
     public function destroy($id)
     {
