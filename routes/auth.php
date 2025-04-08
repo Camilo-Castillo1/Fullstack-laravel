@@ -26,7 +26,7 @@ Route::middleware('guest')->group(function () {
                 ->name('password.request');
 
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-                ->name('password.email');
+                ->name('password.correo');
 
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
                 ->name('password.reset');
@@ -36,14 +36,14 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
+    Route::get('verify-correo', EmailVerificationPromptController::class)
                 ->name('verification.notice');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+    Route::get('verify-correo/{id}/{hash}', VerifyEmailController::class)
                 ->middleware(['signed', 'throttle:6,1'])
                 ->name('verification.verify');
 
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    Route::post('correo/verification-notification', [EmailVerificationNotificationController::class, 'store'])
                 ->middleware('throttle:6,1')
                 ->name('verification.send');
 

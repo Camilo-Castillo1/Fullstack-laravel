@@ -13,7 +13,7 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Muestra el formulario de login.
      */
     public function create(): View
     {
@@ -21,11 +21,12 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Procesa el login usando el campo 'correo'.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        // ✅ Adaptar para usar "correo" en lugar de "email"
+        $request->authenticate(); // ya usa correo gracias a LoginRequest modificado
 
         $request->session()->regenerate();
 
@@ -33,14 +34,13 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Destroy an authenticated session.
+     * Cierra sesión.
      */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');

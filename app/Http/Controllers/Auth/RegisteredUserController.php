@@ -10,13 +10,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
     /**
-     * Display the registration view.
+     * Mostrar el formulario de registro.
      */
     public function create(): View
     {
@@ -24,26 +24,39 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Manejar la solicitud de registro.
      */
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'telefono' => 'nullable|string|max:20',
+            'correo' => 'required|string|email|max:255|unique:users,correo',
+            'password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'nombre' => $request->nombre,
+            'apellido' => $request->apellido,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo,
             'password' => Hash::make($request->password),
+            'estado' => 'activo',
         ]);
 
-        event(new Registered($user));
+        // ✅ Crear rol 'usuario' si no existe
+        if (!Role::where('name', 'usuario')->exists()) {
+            Role::create([
+                'name' => 'usuario',
+                'guard_name' => 'web',
+            ]);
+        }
 
+        // ✅ Asignar rol al usuario
+        $user->assignRole('usuario');
+
+        event(new Registered($user));
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
