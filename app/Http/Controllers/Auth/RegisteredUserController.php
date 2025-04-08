@@ -28,6 +28,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // 🔐 Verificar si ya existe un usuario con el rol admin
+        $adminExists = Role::where('name', 'admin')
+            ->first()
+            ?->users()
+            ->exists();
+
+        if ($adminExists) {
+            return redirect()->route('login')->withErrors([
+                'correo' => 'Ya existe un usuario administrador. No se permiten más registros públicos.',
+            ]);
+        }
+
+        // 🛡 Validación
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -36,6 +49,7 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
+        // 🧠 Crear usuario
         $user = User::create([
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
@@ -45,17 +59,18 @@ class RegisteredUserController extends Controller
             'estado' => 'activo',
         ]);
 
-        // ✅ Crear rol 'usuario' si no existe
-        if (!Role::where('name', 'usuario')->exists()) {
+        // ✅ Crear rol 'admin' si no existe
+        if (!Role::where('name', 'admin')->exists()) {
             Role::create([
-                'name' => 'usuario',
+                'name' => 'admin',
                 'guard_name' => 'web',
             ]);
         }
 
-        // ✅ Asignar rol al usuario
-        $user->assignRole('usuario');
+        // ✅ Asignar rol 'admin' al primer usuario creado desde el registro
+        $user->assignRole('admin');
 
+        // 🔔 Evento y login automático
         event(new Registered($user));
         Auth::login($user);
 
