@@ -6,15 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
 
-/**
-* @OA\Info(
-*     title="API de Usuarios",
-*     version="1.0",
-*     description="Gestión de usuarios del sistema"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
+
 
 /**
  * @OA\Schema(
@@ -39,7 +32,7 @@ class UsuarioController extends Controller
      * Listar todos los usuarios
      *
      * @OA\Get(
-     *     path="/api/usuarios",
+     *     path="/usuarios",
      *     tags={"Usuarios"},
      *     summary="Obtener lista de todos los usuarios",
      *     @OA\Response(
@@ -58,7 +51,7 @@ class UsuarioController extends Controller
      * Crear un nuevo usuario
      *
      * @OA\Post(
-     *     path="/api/usuarios",
+     *     path="/usuarios",
      *     tags={"Usuarios"},
      *     summary="Registrar un nuevo usuario",
      *     @OA\RequestBody(
@@ -108,7 +101,7 @@ class UsuarioController extends Controller
      * Obtener un usuario por ID
      *
      * @OA\Get(
-     *     path="/api/usuarios/{id}",
+     *     path="/usuarios/{id}",
      *     tags={"Usuarios"},
      *     summary="Consultar usuario por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -131,7 +124,7 @@ class UsuarioController extends Controller
      * Actualizar un usuario existente
      *
      * @OA\Put(
-     *     path="/api/usuarios/{id}",
+     *     path="/usuarios/{id}",
      *     tags={"Usuarios"},
      *     summary="Actualizar un usuario",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -180,7 +173,7 @@ class UsuarioController extends Controller
      * Eliminar un usuario
      *
      * @OA\Delete(
-     *     path="/api/usuarios/{id}",
+     *     path="/usuarios/{id}",
      *     tags={"Usuarios"},
      *     summary="Eliminar un usuario por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),

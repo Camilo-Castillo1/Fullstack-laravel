@@ -5,15 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Permiso;
 
-/**
-* @OA\Info(
-*     title="API de Permisos",
-*     version="1.0",
-*     description="Gestión de permisos para el control de acceso"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(
@@ -34,7 +26,7 @@ class PermisoController extends Controller
      * Listar todos los permisos
      *
      * @OA\Get(
-     *     path="/api/permisos",
+     *     path="/permisos",
      *     tags={"Permisos"},
      *     summary="Obtener todos los permisos",
      *     @OA\Response(
@@ -53,7 +45,7 @@ class PermisoController extends Controller
      * Crear un nuevo permiso
      *
      * @OA\Post(
-     *     path="/api/permisos",
+     *     path="/permisos",
      *     tags={"Permisos"},
      *     summary="Registrar un nuevo permiso",
      *     @OA\RequestBody(
@@ -90,7 +82,7 @@ class PermisoController extends Controller
      * Obtener un permiso por ID
      *
      * @OA\Get(
-     *     path="/api/permisos/{id}",
+     *     path="/permisos/{id}",
      *     tags={"Permisos"},
      *     summary="Consultar un permiso por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -117,7 +109,7 @@ class PermisoController extends Controller
      * Actualizar un permiso
      *
      * @OA\Put(
-     *     path="/api/permisos/{id}",
+     *     path="/permisos/{id}",
      *     tags={"Permisos"},
      *     summary="Actualizar permiso existente",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -156,7 +148,7 @@ class PermisoController extends Controller
      * Eliminar un permiso
      *
      * @OA\Delete(
-     *     path="/api/permisos/{id}",
+     *     path="/permisos/{id}",
      *     tags={"Permisos"},
      *     summary="Eliminar un permiso",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),

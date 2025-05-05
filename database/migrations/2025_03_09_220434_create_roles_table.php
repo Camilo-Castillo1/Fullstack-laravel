@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 100);
+            $table->string('nombre', 100);#->unique para que solo haya un nombre por rol
             $table->text('descripcion')->nullable();
             $table->timestamps();
         });

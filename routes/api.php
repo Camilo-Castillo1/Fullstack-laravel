@@ -37,8 +37,19 @@ Route::apiResource('categorias', CategoriaController::class);
 Route::apiResource('almacenes', AlmacenController::class);
 Route::apiResource('control-temperaturas', ControlTemperaturaController::class);
 Route::apiResource('alertas-vencimiento', AlertaVencimientoController::class);
-route::apiResource('lotes', LoteController::class);
-route::apiResource('lote-ubicacion', LoteUbicacionController::class);
+Route::apiResource('lotes', LoteController::class);
+Route::apiResource('lote-ubicacion', LoteUbicacionController::class);
+Route::apiResource('productos', ProductoController::class);
+Route::apiResource('usuarios', UsuarioController::class);
+Route::apiResource('logs-usuario', LogUsuarioController::class)->except(['update', 'destroy']); // ya que esos están deshabilitados
+Route::apiResource('politicas-inventario', PoliticaInventarioController::class);
+Route::apiResource('roles', RolController::class);
+Route::apiResource('permisos', PermisoController::class);
+Route::apiResource('roles-permisos', RolPermisoController::class)->except(['update']); // el update está prohibido
+Route::apiResource('entradas-inventario', EntradaInventarioController::class);
+Route::apiResource('salidas-inventario', SalidaInventarioController::class);
+Route::apiResource('ubicaciones-almacen', UbicacionAlmacenController::class);
+
 Route::get('/ejemplo', [ApiController::class, 'ejemplo']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

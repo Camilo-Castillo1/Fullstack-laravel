@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nombre', 100);
             $table->string('modulo', 50);
+            #$table->unique(['nombre', 'modulo']); 
             $table->text('descripcion')->nullable();
             $table->timestamps();
         });

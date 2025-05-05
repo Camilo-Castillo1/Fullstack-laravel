@@ -5,18 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 
-/**
-* @OA\Info(
-*     title="API de Categorías",
-*     version="1.0",
-*     description="Documentación de la API para el manejo de categorías"
-* )
-*
-* * @OA\Server(
-*     url="{{scheme}}://127.0.0.1:8000"
-* )
 
-*/
 
 /**
  * @OA\Schema(

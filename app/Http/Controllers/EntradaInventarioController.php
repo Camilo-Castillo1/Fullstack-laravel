@@ -5,15 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\EntradaInventario;
 
-/**
-* @OA\Info(
-*     title="API de Entradas de Inventario",
-*     version="1.0",
-*     description="Gestión de entradas de inventario"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
 
 /**
  * @OA\Schema(

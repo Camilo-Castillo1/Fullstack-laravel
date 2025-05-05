@@ -10,21 +10,21 @@
     },
     "servers": [
         {
-            "url": "http://localhost"
+            "url": "http://localhost:8000/api"
         },
         {
             "url": "/api"
         }
     ],
     "paths": {
-        "/api/alertas-vencimiento": {
+        "/alertas-vencimiento": {
             "get": {
                 "tags": [
                     "AlertaVencimiento"
                 ],
                 "summary": "Listar todas las alertas de vencimiento",
                 "description": "Listar todas las alertas",
-                "operationId": "87fdaf10cbbee35a6316ccc9a4959873",
+                "operationId": "5b4c32579d13de62d3a09237e1396858",
                 "responses": {
                     "200": {
                         "description": "Lista de alertas",
@@ -40,9 +40,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/alertas-vencimiento": {
+            },
             "post": {
                 "tags": [
                     "AlertaVencimiento"
@@ -1048,14 +1046,14 @@
                 }
             }
         },
-        "/api/logs-usuario": {
+        "/logs-usuario": {
             "get": {
                 "tags": [
                     "LogUsuario"
                 ],
                 "summary": "Listar logs de usuarios",
                 "description": "Listar todos los logs de usuarios",
-                "operationId": "ea909d5a8d827a1940dce7466451cdaa",
+                "operationId": "1de13360016fd5d60d317b7d6398a3e3",
                 "responses": {
                     "200": {
                         "description": "Lista de logs",
@@ -1078,7 +1076,7 @@
                 ],
                 "summary": "Registrar un nuevo evento en el log",
                 "description": "Crear un nuevo registro de log",
-                "operationId": "76b464966fc99f7c6f6745b33b895813",
+                "operationId": "b5f2f11dff8e98332e1820d136e3affa",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1141,14 +1139,14 @@
                 }
             }
         },
-        "/api/logs-usuario/{id}": {
+        "/logs-usuario/{id}": {
             "get": {
                 "tags": [
                     "LogUsuario"
                 ],
                 "summary": "Obtener log específico",
                 "description": "Obtener un log por ID",
-                "operationId": "9a65c1e9f154fd183bde9d01912b5b99",
+                "operationId": "b1eba76fd87e79b9b4cbb06ef4494ec8",
                 "parameters": [
                     {
                         "name": "id",
@@ -1181,7 +1179,7 @@
                 ],
                 "summary": "(Deshabilitado) Intento de actualizar log",
                 "description": "No se permite actualizar registros de log",
-                "operationId": "409491b4b84965cac44a873e81cac724",
+                "operationId": "bfad3d0eca0883af0d9acc73bed47ccc",
                 "parameters": [
                     {
                         "name": "id",
@@ -1204,7 +1202,7 @@
                 ],
                 "summary": "(Deshabilitado) Intento de eliminar log",
                 "description": "No se permite eliminar registros de log",
-                "operationId": "345c80651413cca253b3b76b15210121",
+                "operationId": "5314f540016a80708541bc7355590360",
                 "parameters": [
                     {
                         "name": "id",
@@ -1690,14 +1688,14 @@
                 }
             }
         },
-        "/api/permisos": {
+        "/permisos": {
             "get": {
                 "tags": [
                     "Permisos"
                 ],
                 "summary": "Obtener todos los permisos",
                 "description": "Listar todos los permisos",
-                "operationId": "8feceb78c9ff332ad552bb98ae0657d3",
+                "operationId": "4498e2440c0c31cabca271f2a212cd48",
                 "responses": {
                     "200": {
                         "description": "Lista de permisos",
@@ -1720,7 +1718,7 @@
                 ],
                 "summary": "Registrar un nuevo permiso",
                 "description": "Crear un nuevo permiso",
-                "operationId": "f5312187af2d66fda3392fd3222089fb",
+                "operationId": "88ddbca3a020cb337c1b05be6a38dade",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1766,14 +1764,14 @@
                 }
             }
         },
-        "/api/permisos/{id}": {
+        "/permisos/{id}": {
             "get": {
                 "tags": [
                     "Permisos"
                 ],
                 "summary": "Consultar un permiso por ID",
                 "description": "Obtener un permiso por ID",
-                "operationId": "36d51e43024849e1a739a7021da163ce",
+                "operationId": "3684a76f19a1903a0491d6d22764e919",
                 "parameters": [
                     {
                         "name": "id",
@@ -1806,7 +1804,7 @@
                 ],
                 "summary": "Actualizar permiso existente",
                 "description": "Actualizar un permiso",
-                "operationId": "bc6245339799a3f8a9a81e93faa293b6",
+                "operationId": "92d1295f2eff2ba8f6135fc45c95bc90",
                 "parameters": [
                     {
                         "name": "id",
@@ -1863,7 +1861,7 @@
                 ],
                 "summary": "Eliminar un permiso",
                 "description": "Eliminar un permiso",
-                "operationId": "1b8b8d685cca25f33209f68652f78fb8",
+                "operationId": "29fbd67aa3b32d516b0a8b75308b37b5",
                 "parameters": [
                     {
                         "name": "id",
@@ -1897,14 +1895,14 @@
                 }
             }
         },
-        "/api/politicas-inventario": {
+        "/politicas-inventario": {
             "get": {
                 "tags": [
                     "PoliticasInventario"
                 ],
                 "summary": "Listar todas las políticas de inventario",
                 "description": "Listar todas las políticas",
-                "operationId": "7224b4509fcc3cce23b4372a5694f73e",
+                "operationId": "45e76ba6c5efde91b6fb67902853ab1e",
                 "responses": {
                     "200": {
                         "description": "Listado de políticas",
@@ -1927,7 +1925,7 @@
                 ],
                 "summary": "Crear nueva política de inventario",
                 "description": "Crear una nueva política de inventario",
-                "operationId": "c6882b6c85155382fbf4962e8bdd91e2",
+                "operationId": "7d4a2676e46d8c3213480fba5dd60e0c",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2003,14 +2001,14 @@
                 }
             }
         },
-        "/api/politicas-inventario/{id}": {
+        "/politicas-inventario/{id}": {
             "get": {
                 "tags": [
                     "PoliticasInventario"
                 ],
                 "summary": "Consultar política por ID",
                 "description": "Obtener una política por ID",
-                "operationId": "f06c20426868ed1e6729aeac9971e8fa",
+                "operationId": "95b883208c03632ded679b36cbedc109",
                 "parameters": [
                     {
                         "name": "id",
@@ -2043,7 +2041,7 @@
                 ],
                 "summary": "Actualizar una política de inventario",
                 "description": "Actualizar una política existente",
-                "operationId": "b469409b184f0bc999e440a8c7780ad4",
+                "operationId": "0f59871c6e419c0ca250dfb64827a95c",
                 "parameters": [
                     {
                         "name": "id",
@@ -2127,7 +2125,7 @@
                 ],
                 "summary": "Eliminar una política",
                 "description": "Eliminar una política de inventario",
-                "operationId": "77d4b1c8fa0c77e2ec168cb064283c46",
+                "operationId": "60135b9fdbc2ad413466b18f6700a171",
                 "parameters": [
                     {
                         "name": "id",
@@ -2161,14 +2159,14 @@
                 }
             }
         },
-        "/api/productos": {
+        "/productos": {
             "get": {
                 "tags": [
                     "Productos"
                 ],
                 "summary": "Obtener todos los productos",
                 "description": "Listar todos los productos",
-                "operationId": "496dc08306524d77f18d124d1d6838aa",
+                "operationId": "e5369e553c0d966b8208a3c8340212b9",
                 "responses": {
                     "200": {
                         "description": "Lista de productos",
@@ -2191,7 +2189,7 @@
                 ],
                 "summary": "Registrar un nuevo producto",
                 "description": "Crear un nuevo producto",
-                "operationId": "48b59f126c849beb4d4de4ff83b7945f",
+                "operationId": "af410719ebcfa712eeea6cbb9ec0d47d",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2258,14 +2256,14 @@
                 }
             }
         },
-        "/api/productos/{id}": {
+        "/productos/{id}": {
             "get": {
                 "tags": [
                     "Productos"
                 ],
                 "summary": "Consultar un producto por ID",
                 "description": "Obtener un producto por ID",
-                "operationId": "672fde814ef8716ee902835cc96ae595",
+                "operationId": "b9db6050bd41d3613d09c177c56f6112",
                 "parameters": [
                     {
                         "name": "id",
@@ -2298,7 +2296,7 @@
                 ],
                 "summary": "Actualizar un producto",
                 "description": "Actualizar un producto",
-                "operationId": "20b20d8e59992eb88abad7dcef3db6d7",
+                "operationId": "52ece9622973f67c210cef56ae204cd3",
                 "parameters": [
                     {
                         "name": "id",
@@ -2355,7 +2353,7 @@
                 ],
                 "summary": "Eliminar un producto",
                 "description": "Eliminar un producto",
-                "operationId": "4c0c7680428675134afd4d793f934f67",
+                "operationId": "239a8dba8b80cd9fb236549acafbd702",
                 "parameters": [
                     {
                         "name": "id",
@@ -2389,14 +2387,14 @@
                 }
             }
         },
-        "/api/roles": {
+        "/roles": {
             "get": {
                 "tags": [
                     "Roles"
                 ],
                 "summary": "Listar todos los roles",
                 "description": "Listar todos los roles",
-                "operationId": "bf78d43aa8b5c576b78b08b73c404cb6",
+                "operationId": "e86a34b22f1dc2b3b386602fb6144c40",
                 "responses": {
                     "200": {
                         "description": "Lista de roles",
@@ -2419,7 +2417,7 @@
                 ],
                 "summary": "Crear nuevo rol",
                 "description": "Crear un nuevo rol",
-                "operationId": "19029466a195a478441990551cb1e8c9",
+                "operationId": "d925918495b560282a759dd2f435eaaf",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2460,14 +2458,14 @@
                 }
             }
         },
-        "/api/roles/{id}": {
+        "/roles/{id}": {
             "get": {
                 "tags": [
                     "Roles"
                 ],
                 "summary": "Consultar un rol por ID",
                 "description": "Obtener un rol por ID",
-                "operationId": "bcca3423f39b15abd0d0214dd6169f3c",
+                "operationId": "43872b2aa4fc69ea7d8101a639b4d17b",
                 "parameters": [
                     {
                         "name": "id",
@@ -2500,7 +2498,7 @@
                 ],
                 "summary": "Actualizar un rol",
                 "description": "Actualizar un rol existente",
-                "operationId": "0444e2e7859bbaa81749d090c06415a1",
+                "operationId": "1c5590cbcb3de4c3707ddb59207ec9ef",
                 "parameters": [
                     {
                         "name": "id",
@@ -2553,7 +2551,7 @@
                 ],
                 "summary": "Eliminar un rol",
                 "description": "Eliminar un rol",
-                "operationId": "de55f66883ee7b0d98d50e5e82e94f7e",
+                "operationId": "0173553c6d657608584ad39cbbfa9004",
                 "parameters": [
                     {
                         "name": "id",
@@ -2587,14 +2585,14 @@
                 }
             }
         },
-        "/api/roles-permisos": {
+        "/roles-permisos": {
             "get": {
                 "tags": [
                     "RolPermiso"
                 ],
                 "summary": "Listar todas las asignaciones de permisos a roles",
                 "description": "Listar todos los permisos asignados a roles",
-                "operationId": "5cfb6251925843978a0285f2a8202c6c",
+                "operationId": "71c403dae3e06ee28146d5c01afbd979",
                 "responses": {
                     "200": {
                         "description": "Listado completo",
@@ -2617,7 +2615,7 @@
                 ],
                 "summary": "Asignar un permiso a un rol",
                 "description": "Asignar un permiso a un rol",
-                "operationId": "17c3e205206aa8dfe20f896c1f6bd201",
+                "operationId": "f3cf5e413ebfc26e64a73c093fd14f4a",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2663,14 +2661,14 @@
                 }
             }
         },
-        "/api/roles-permisos/{id}": {
+        "/roles-permisos/{id}": {
             "get": {
                 "tags": [
                     "RolPermiso"
                 ],
                 "summary": "Obtener permisos de un rol",
                 "description": "Obtener todos los permisos de un rol específico",
-                "operationId": "fda837b78ce25c620607f9e61111caaf",
+                "operationId": "8280b2ee4f005c9a03100bf23f0871bb",
                 "parameters": [
                     {
                         "name": "id",
@@ -2704,9 +2702,9 @@
                 "tags": [
                     "RolPermiso"
                 ],
-                "summary": "❌ No se permite actualizar permisos de roles directamente",
+                "summary": " No se permite actualizar permisos de roles directamente",
                 "description": "Deshabilitado: no se permite actualizar la relación",
-                "operationId": "7f78842ec9d810f7cc15b4339de1f981",
+                "operationId": "dba1edc136a80a43f3f32f4c67011c33",
                 "parameters": [
                     {
                         "name": "id",
@@ -2729,7 +2727,7 @@
                 ],
                 "summary": "Eliminar una asignación de permiso de un rol",
                 "description": "Eliminar una asignación de permiso",
-                "operationId": "39013174b5da330f2e139598b771adbd",
+                "operationId": "96b147bca3d80edfedacaaa103d3cffb",
                 "parameters": [
                     {
                         "name": "id",
@@ -2763,14 +2761,14 @@
                 }
             }
         },
-        "/api/salidas-inventario": {
+        "/salidas-inventario": {
             "get": {
                 "tags": [
                     "SalidasInventario"
                 ],
                 "summary": "Listar salidas de inventario",
                 "description": "Listar todas las salidas de inventario",
-                "operationId": "4c675d55a9a77b3d8dbd4242f87f954f",
+                "operationId": "c22db4362f65142c74ac9cd6d3feb66f",
                 "responses": {
                     "200": {
                         "description": "Listado de salidas",
@@ -2793,7 +2791,7 @@
                 ],
                 "summary": "Registrar salida de inventario",
                 "description": "Registrar una nueva salida de inventario",
-                "operationId": "2a1e1915e0644b97a13b25237aa0e38d",
+                "operationId": "bbf8fb9e12cf5f52afe1fdc6455eaa7c",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2844,14 +2842,14 @@
                 }
             }
         },
-        "/api/salidas-inventario/{id}": {
+        "/salidas-inventario/{id}": {
             "get": {
                 "tags": [
                     "SalidasInventario"
                 ],
                 "summary": "Consultar salida por ID",
                 "description": "Obtener una salida por ID",
-                "operationId": "127d81ca680f869e5329b83f53fcddfc",
+                "operationId": "3cffb290ee797c0bc12ae91be2fa6e42",
                 "parameters": [
                     {
                         "name": "id",
@@ -2884,7 +2882,7 @@
                 ],
                 "summary": "Actualizar salida de inventario",
                 "description": "Actualizar una salida existente",
-                "operationId": "8e0ce1111f231e5d4345e7bbcf37ff18",
+                "operationId": "e25f78478aa27e864256a41f50eeb962",
                 "parameters": [
                     {
                         "name": "id",
@@ -2937,7 +2935,7 @@
                 ],
                 "summary": "Eliminar salida de inventario",
                 "description": "Eliminar una salida de inventario",
-                "operationId": "a3ffcd82edeb22ca6cbc00ccb5c14e24",
+                "operationId": "584ca2e90ce8d68495b3360faa334f9d",
                 "parameters": [
                     {
                         "name": "id",
@@ -2971,14 +2969,14 @@
                 }
             }
         },
-        "/api/ubicaciones-almacen": {
+        "/ubicaciones-almacen": {
             "get": {
                 "tags": [
                     "UbicacionesAlmacen"
                 ],
                 "summary": "Obtener todas las ubicaciones de los almacenes",
                 "description": "Listar todas las ubicaciones",
-                "operationId": "065338a2fecb23ce1af643690b1fc413",
+                "operationId": "aa82ad06e33c667961bc6070c5fbada9",
                 "responses": {
                     "200": {
                         "description": "Listado completo",
@@ -3001,7 +2999,7 @@
                 ],
                 "summary": "Registrar una ubicación dentro de un almacén",
                 "description": "Registrar una nueva ubicación",
-                "operationId": "a40f7a68cd2fc521c50727a7c303bb07",
+                "operationId": "790eaa6e1e895ab6b970fb060570b5a3",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3062,14 +3060,14 @@
                 }
             }
         },
-        "/api/ubicaciones-almacen/{id}": {
+        "/ubicaciones-almacen/{id}": {
             "get": {
                 "tags": [
                     "UbicacionesAlmacen"
                 ],
                 "summary": "Obtener una ubicación específica",
                 "description": "Consultar una ubicación por ID",
-                "operationId": "76c9a2dabcb814cb80f75432c11d2bf5",
+                "operationId": "734bc758188f0ff4b982db9fd30838ba",
                 "parameters": [
                     {
                         "name": "id",
@@ -3102,7 +3100,7 @@
                 ],
                 "summary": "Actualizar ubicación en almacén",
                 "description": "Actualizar una ubicación de almacén",
-                "operationId": "133883d5053e9ed5173e6494a2c7fada",
+                "operationId": "5045b8c92fe14c5218c623c26079e258",
                 "parameters": [
                     {
                         "name": "id",
@@ -3162,7 +3160,7 @@
                 ],
                 "summary": "Eliminar ubicación",
                 "description": "Eliminar una ubicación de almacén",
-                "operationId": "0c65fbf703ca1989a916e9dd44cfc236",
+                "operationId": "31b7398c8275d3fd239b4573c746a557",
                 "parameters": [
                     {
                         "name": "id",
@@ -3196,14 +3194,14 @@
                 }
             }
         },
-        "/api/usuarios": {
+        "/usuarios": {
             "get": {
                 "tags": [
                     "Usuarios"
                 ],
                 "summary": "Obtener lista de todos los usuarios",
                 "description": "Listar todos los usuarios",
-                "operationId": "e9d4d8b419dbef04b5748fbf9ccf3881",
+                "operationId": "856e795f5d5450966d6b2da23cad7554",
                 "responses": {
                     "200": {
                         "description": "Lista de usuarios",
@@ -3226,7 +3224,7 @@
                 ],
                 "summary": "Registrar un nuevo usuario",
                 "description": "Crear un nuevo usuario",
-                "operationId": "4e9dbcbdaaaf9faab196a82d5cbaea23",
+                "operationId": "649b8ee4cb315de3c09d4f93fcc64588",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3293,14 +3291,14 @@
                 }
             }
         },
-        "/api/usuarios/{id}": {
+        "/usuarios/{id}": {
             "get": {
                 "tags": [
                     "Usuarios"
                 ],
                 "summary": "Consultar usuario por ID",
                 "description": "Obtener un usuario por ID",
-                "operationId": "e9ac05ddc4ea46d8848b012d7d92e3ac",
+                "operationId": "f7770cca0baeb49295fc5bd630df72d5",
                 "parameters": [
                     {
                         "name": "id",
@@ -3333,7 +3331,7 @@
                 ],
                 "summary": "Actualizar un usuario",
                 "description": "Actualizar un usuario existente",
-                "operationId": "27ac608b6dd8b8e7c7c45b10c5210b3e",
+                "operationId": "1422ebc3912e63b5f136297e8679c0ef",
                 "parameters": [
                     {
                         "name": "id",
@@ -3398,7 +3396,7 @@
                 ],
                 "summary": "Eliminar un usuario por ID",
                 "description": "Eliminar un usuario",
-                "operationId": "ea700764859a665afd38bb39c2842f1c",
+                "operationId": "5cff1c6ea12c400639af50c0b7833c1a",
                 "parameters": [
                     {
                         "name": "id",

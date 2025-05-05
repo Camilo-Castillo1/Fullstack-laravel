@@ -14,7 +14,7 @@ use OpenApi\Annotations as OA;
  *          email="soporte@tuempresa.com"
  *      )
  * )
- * @OA\Server(url="http://localhost")
+ * @OA\Server(url="http://localhost:8000/api")
  */
 class ApiController extends Controller
 {

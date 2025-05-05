@@ -5,17 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AlertaVencimiento;
 
-/**
-* @OA\Info(
-*     title="API de Alertas de Vencimiento",
-*     version="1.0",
-*     description="Gestión de alertas para vencimientos de lotes"
-* )
-*
-* @OA\Server(
-*     url="http://127.0.0.1:8000"
-* )
-*/
+
 
 /**
  * @OA\Schema(
@@ -35,7 +25,7 @@ class AlertaVencimientoController extends Controller
      * Listar todas las alertas
      *
      * @OA\Get(
-     *     path="/api/alertas-vencimiento",
+     *     path="/alertas-vencimiento",
      *     tags={"AlertaVencimiento"},
      *     summary="Listar todas las alertas de vencimiento",
      *     @OA\Response(

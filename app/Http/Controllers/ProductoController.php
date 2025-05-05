@@ -5,15 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 
-/**
-* @OA\Info(
-*     title="API de Productos",
-*     version="1.0",
-*     description="Gestión de productos del inventario"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(
@@ -37,7 +29,7 @@ class ProductoController extends Controller
      * Listar todos los productos
      *
      * @OA\Get(
-     *     path="/api/productos",
+     *     path="/productos",
      *     tags={"Productos"},
      *     summary="Obtener todos los productos",
      *     @OA\Response(
@@ -56,7 +48,7 @@ class ProductoController extends Controller
      * Crear un nuevo producto
      *
      * @OA\Post(
-     *     path="/api/productos",
+     *     path="/productos",
      *     tags={"Productos"},
      *     summary="Registrar un nuevo producto",
      *     @OA\RequestBody(
@@ -95,7 +87,7 @@ class ProductoController extends Controller
      * Obtener un producto por ID
      *
      * @OA\Get(
-     *     path="/api/productos/{id}",
+     *     path="/productos/{id}",
      *     tags={"Productos"},
      *     summary="Consultar un producto por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -118,7 +110,7 @@ class ProductoController extends Controller
      * Actualizar un producto
      *
      * @OA\Put(
-     *     path="/api/productos/{id}",
+     *     path="/productos/{id}",
      *     tags={"Productos"},
      *     summary="Actualizar un producto",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -151,7 +143,7 @@ class ProductoController extends Controller
      * Eliminar un producto
      *
      * @OA\Delete(
-     *     path="/api/productos/{id}",
+     *     path="/productos/{id}",
      *     tags={"Productos"},
      *     summary="Eliminar un producto",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),

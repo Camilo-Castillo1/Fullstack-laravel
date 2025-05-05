@@ -7,15 +7,7 @@ use App\Models\Rol;
 use App\Models\Permiso;
 use App\Models\RolPermiso;
 
-/**
-* @OA\Info(
-*     title="API de Asignación de Permisos a Roles",
-*     version="1.0",
-*     description="Gestión de relaciones entre roles y permisos"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(
@@ -36,7 +28,7 @@ class RolPermisoController extends Controller
      * Listar todos los permisos asignados a roles
      *
      * @OA\Get(
-     *     path="/api/roles-permisos",
+     *     path="/roles-permisos",
      *     tags={"RolPermiso"},
      *     summary="Listar todas las asignaciones de permisos a roles",
      *     @OA\Response(
@@ -55,7 +47,7 @@ class RolPermisoController extends Controller
      * Asignar un permiso a un rol
      *
      * @OA\Post(
-     *     path="/api/roles-permisos",
+     *     path="/roles-permisos",
      *     tags={"RolPermiso"},
      *     summary="Asignar un permiso a un rol",
      *     @OA\RequestBody(
@@ -93,7 +85,7 @@ class RolPermisoController extends Controller
      * Obtener todos los permisos de un rol específico
      *
      * @OA\Get(
-     *     path="/api/roles-permisos/{id}",
+     *     path="/roles-permisos/{id}",
      *     tags={"RolPermiso"},
      *     summary="Obtener permisos de un rol",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -120,9 +112,9 @@ class RolPermisoController extends Controller
      * Deshabilitado: no se permite actualizar la relación
      *
      * @OA\Put(
-     *     path="/api/roles-permisos/{id}",
+     *     path="/roles-permisos/{id}",
      *     tags={"RolPermiso"},
-     *     summary="❌ No se permite actualizar permisos de roles directamente",
+     *     summary=" No se permite actualizar permisos de roles directamente",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(response=403, description="Actualización no permitida")
      * )
@@ -136,7 +128,7 @@ class RolPermisoController extends Controller
      * Eliminar una asignación de permiso
      *
      * @OA\Delete(
-     *     path="/api/roles-permisos/{id}",
+     *     path="/roles-permisos/{id}",
      *     tags={"RolPermiso"},
      *     summary="Eliminar una asignación de permiso de un rol",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -148,16 +140,24 @@ class RolPermisoController extends Controller
      *     @OA\Response(response=404, description="Registro no encontrado")
      * )
      */
-    public function destroy($id)
-    {
-        $rolPermiso = RolPermiso::find($id);
+    public function destroy(Request $request)
+{
+    $request->validate([
+        'id_rol' => 'required|exists:roles,id',
+        'id_permiso' => 'required|exists:permisos,id'
+    ]);
 
-        if (!$rolPermiso) {
-            return response()->json(['error' => 'Registro no encontrado'], 404);
-        }
+    $rolPermiso = RolPermiso::where('id_rol', $request->id_rol)
+                             ->where('id_permiso', $request->id_permiso)
+                             ->first();
 
-        $rolPermiso->delete();
-
-        return response()->json(['message' => 'Permiso eliminado del rol correctamente']);
+    if (!$rolPermiso) {
+        return response()->json(['error' => 'Registro no encontrado'], 404);
     }
+
+    $rolPermiso->delete();
+
+    return response()->json(['message' => 'Permiso eliminado del rol correctamente']);
+}
+
 }

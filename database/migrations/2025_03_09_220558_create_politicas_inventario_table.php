@@ -12,7 +12,10 @@ return new class extends Migration {
             $table->id();
             $table->string('nombre', 50);
             $table->enum('tipo', ['PEPS', 'UEPS', 'FIFO']);
-            $table->enum('aplicable_a', ['refrigerado', 'seco', 'congelado']);
+            $table->enum('aplicable_a', ['producto', 'lote', 'almacen']);
+          //$table->enum('aplicable_a', ['refrigerado', 'seco', 'congelado']);
+
+            $table->integer('valor');
             $table->date('fecha_implementacion')->default(DB::raw('CURRENT_DATE')); // ✅ Se agrega un valor por defecto
             $table->unsignedBigInteger('ubicacion_id');
             $table->unsignedBigInteger('categoria_id')->nullable();
@@ -32,4 +35,4 @@ return new class extends Migration {
     {
         Schema::dropIfExists('politicas_inventario');
     }
-};
+};//todo bien

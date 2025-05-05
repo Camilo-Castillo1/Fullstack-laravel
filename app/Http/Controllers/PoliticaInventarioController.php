@@ -5,15 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PoliticaInventario;
 
-/**
-* @OA\Info(
-*     title="API de Políticas de Inventario",
-*     version="1.0",
-*     description="Gestión de políticas de inventario por ubicación, categoría y tipo"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(
@@ -38,7 +30,7 @@ class PoliticaInventarioController extends Controller
      * Listar todas las políticas
      *
      * @OA\Get(
-     *     path="/api/politicas-inventario",
+     *     path="/politicas-inventario",
      *     tags={"PoliticasInventario"},
      *     summary="Listar todas las políticas de inventario",
      *     @OA\Response(
@@ -57,7 +49,7 @@ class PoliticaInventarioController extends Controller
      * Crear una nueva política de inventario
      *
      * @OA\Post(
-     *     path="/api/politicas-inventario",
+     *     path="/politicas-inventario",
      *     tags={"PoliticasInventario"},
      *     summary="Crear nueva política de inventario",
      *     @OA\RequestBody(
@@ -80,13 +72,14 @@ class PoliticaInventarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:50|unique:politicas_inventario',
+            'nombre' => 'required|string|max:50',
             'tipo' => 'required|in:PEPS,UEPS,FIFO',
-            'aplicable_a' => 'required|in:refrigerado,seco,congelado',
-            'fecha_implementacion' => 'required|date',
+            'aplicable_a' => 'required|in:producto,lote,almacen',
+            'valor' => 'required|integer|min:1', 
+            'fecha_implementacion' => 'nullable|date',
             'ubicacion_id' => 'required|exists:ubicaciones_almacenamiento,id',
             'categoria_id' => 'nullable|exists:categorias,id',
-            'almacen_id' => 'nullable|exists:almacenes,id'
+            'almacen_id' => 'nullable|exists:almacenes,id',
         ]);
 
         $politica = PoliticaInventario::create($request->all());
@@ -98,7 +91,7 @@ class PoliticaInventarioController extends Controller
      * Obtener una política por ID
      *
      * @OA\Get(
-     *     path="/api/politicas-inventario/{id}",
+     *     path="/politicas-inventario/{id}",
      *     tags={"PoliticasInventario"},
      *     summary="Consultar política por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -121,7 +114,7 @@ class PoliticaInventarioController extends Controller
      * Actualizar una política existente
      *
      * @OA\Put(
-     *     path="/api/politicas-inventario/{id}",
+     *     path="/politicas-inventario/{id}",
      *     tags={"PoliticasInventario"},
      *     summary="Actualizar una política de inventario",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -150,14 +143,16 @@ class PoliticaInventarioController extends Controller
         }
 
         $request->validate([
-            'nombre' => 'sometimes|string|max:50|unique:politicas_inventario,nombre,' . $id,
-            'tipo' => 'sometimes|in:PEPS,UEPS,FIFO',
-            'aplicable_a' => 'sometimes|in:refrigerado,seco,congelado',
-            'fecha_implementacion' => 'sometimes|date',
-            'ubicacion_id' => 'sometimes|exists:ubicaciones_almacenamiento,id',
+            'nombre' => 'required|string|max:50',
+            'tipo' => 'required|in:PEPS,UEPS,FIFO',
+            'aplicable_a' => 'required|in:producto,lote,almacen',
+            'valor' => 'required|integer|min:1', 
+            'fecha_implementacion' => 'nullable|date',
+            'ubicacion_id' => 'required|exists:ubicaciones_almacenamiento,id',
             'categoria_id' => 'nullable|exists:categorias,id',
-            'almacen_id' => 'nullable|exists:almacenes,id'
+            'almacen_id' => 'nullable|exists:almacenes,id',
         ]);
+        
 
         $politica->update($request->all());
 
@@ -168,7 +163,7 @@ class PoliticaInventarioController extends Controller
      * Eliminar una política de inventario
      *
      * @OA\Delete(
-     *     path="/api/politicas-inventario/{id}",
+     *     path="/politicas-inventario/{id}",
      *     tags={"PoliticasInventario"},
      *     summary="Eliminar una política",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),

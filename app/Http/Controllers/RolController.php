@@ -5,15 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Rol;
 
-/**
-* @OA\Info(
-*     title="API de Roles",
-*     version="1.0",
-*     description="Gestión de roles de usuario"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(
@@ -33,7 +25,7 @@ class RolController extends Controller
      * Listar todos los roles
      *
      * @OA\Get(
-     *     path="/api/roles",
+     *     path="/roles",
      *     tags={"Roles"},
      *     summary="Listar todos los roles",
      *     @OA\Response(
@@ -52,7 +44,7 @@ class RolController extends Controller
      * Crear un nuevo rol
      *
      * @OA\Post(
-     *     path="/api/roles",
+     *     path="/roles",
      *     tags={"Roles"},
      *     summary="Crear nuevo rol",
      *     @OA\RequestBody(
@@ -83,7 +75,7 @@ class RolController extends Controller
      * Obtener un rol por ID
      *
      * @OA\Get(
-     *     path="/api/roles/{id}",
+     *     path="/roles/{id}",
      *     tags={"Roles"},
      *     summary="Consultar un rol por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -106,7 +98,7 @@ class RolController extends Controller
      * Actualizar un rol existente
      *
      * @OA\Put(
-     *     path="/api/roles/{id}",
+     *     path="/roles/{id}",
      *     tags={"Roles"},
      *     summary="Actualizar un rol",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -143,7 +135,7 @@ class RolController extends Controller
      * Eliminar un rol
      *
      * @OA\Delete(
-     *     path="/api/roles/{id}",
+     *     path="/roles/{id}",
      *     tags={"Roles"},
      *     summary="Eliminar un rol",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -168,3 +160,4 @@ class RolController extends Controller
         return response()->json(['message' => 'Rol eliminado correctamente']);
     }
 }
+//bien por el momento

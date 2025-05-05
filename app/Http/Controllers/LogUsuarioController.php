@@ -5,15 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LogUsuario;
 
-/**
-* @OA\Info(
-*     title="API de Logs de Usuario",
-*     version="1.0",
-*     description="Registra y consulta logs de actividad de usuarios"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(
@@ -38,7 +30,7 @@ class LogUsuarioController extends Controller
      * Listar todos los logs de usuarios
      *
      * @OA\Get(
-     *     path="/api/logs-usuario",
+     *     path="/logs-usuario",
      *     tags={"LogUsuario"},
      *     summary="Listar logs de usuarios",
      *     @OA\Response(
@@ -50,14 +42,15 @@ class LogUsuarioController extends Controller
      */
     public function index()
     {
-        return response()->json(LogUsuario::all(), 200);
+        return response()->json(LogUsuario::paginate(10), 200);
+
     }
 
     /**
      * Crear un nuevo registro de log
      *
      * @OA\Post(
-     *     path="/api/logs-usuario",
+     *     path="/logs-usuario",
      *     tags={"LogUsuario"},
      *     summary="Registrar un nuevo evento en el log",
      *     @OA\RequestBody(
@@ -104,7 +97,7 @@ class LogUsuarioController extends Controller
      * Obtener un log por ID
      *
      * @OA\Get(
-     *     path="/api/logs-usuario/{id}",
+     *     path="/logs-usuario/{id}",
      *     tags={"LogUsuario"},
      *     summary="Obtener log específico",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -127,7 +120,7 @@ class LogUsuarioController extends Controller
      * No se permite actualizar registros de log
      *
      * @OA\Put(
-     *     path="/api/logs-usuario/{id}",
+     *     path="/logs-usuario/{id}",
      *     tags={"LogUsuario"},
      *     summary="(Deshabilitado) Intento de actualizar log",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -143,7 +136,7 @@ class LogUsuarioController extends Controller
      * No se permite eliminar registros de log
      *
      * @OA\Delete(
-     *     path="/api/logs-usuario/{id}",
+     *     path="/logs-usuario/{id}",
      *     tags={"LogUsuario"},
      *     summary="(Deshabilitado) Intento de eliminar log",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),

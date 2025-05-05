@@ -9,9 +9,9 @@ return new class extends Migration {
     {
         Schema::create('almacenes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 255);
+            $table->string('nombre', 255)->unique();// unique para evitar duplicados
             $table->text('ubicacion');
-            $table->integer('capacidad_maxima');
+            $table->integer('capacidad_maxima'); //se recomienda dejarlo en el modelo o swagger
             $table->timestamps();
         });
     }

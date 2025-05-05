@@ -5,17 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ControlTemperatura;
 
-/**
-* @OA\Info(
-*     title="API de Control de Temperatura",
-*     version="1.0",
-*     description="Documentación de la API para el control de temperaturas en almacenes"
-* )
-*
-* @OA\Server(
-*     url="http://127.0.0.1:8000"
-* )
-*/
+
 
 /**
  * @OA\Schema(

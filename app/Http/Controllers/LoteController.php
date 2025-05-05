@@ -5,15 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Lote;
 
-/**
-* @OA\Info(
-*     title="API de Lotes",
-*     version="1.0",
-*     description="Gestión de lotes de productos"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(

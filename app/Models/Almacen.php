@@ -3,7 +3,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\ControlTemperatura;
+// Asegura que el modelo ControlTemperatura esté disponible
 class Almacen extends Model
 {
     use HasFactory;

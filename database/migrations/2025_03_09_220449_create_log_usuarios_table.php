@@ -15,8 +15,9 @@ return new class extends Migration {
             $table->text('valor_anterior')->nullable();
             $table->text('valor_nuevo')->nullable();
             $table->unsignedBigInteger('usuario_modifico')->nullable(); // Usuario que realizó la acción
-            $table->timestamp('fecha_evento')->nullable()->default(now()); // Permite NULL y usa fecha actual
-
+            #$table->timestamp('fecha_evento')->useCurrent(); // Permite NULL y usa fecha actual
+            //simplificado
+            
             // Claves foráneas
             $table->foreign('id_usuario')->references('id')->on('usuarios')->onDelete('cascade');
             $table->foreign('usuario_modifico')->references('id')->on('usuarios')->onDelete('set null');

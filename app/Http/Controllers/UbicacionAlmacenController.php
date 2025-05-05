@@ -5,15 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UbicacionAlmacen;
 
-/**
-* @OA\Info(
-*     title="API de Ubicaciones en Almacenes",
-*     version="1.0",
-*     description="Gestión de ubicaciones físicas dentro de almacenes"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(
@@ -36,7 +28,7 @@ class UbicacionAlmacenController extends Controller
      * Listar todas las ubicaciones
      *
      * @OA\Get(
-     *     path="/api/ubicaciones-almacen",
+     *     path="/ubicaciones-almacen",
      *     tags={"UbicacionesAlmacen"},
      *     summary="Obtener todas las ubicaciones de los almacenes",
      *     @OA\Response(
@@ -55,7 +47,7 @@ class UbicacionAlmacenController extends Controller
      * Registrar una nueva ubicación
      *
      * @OA\Post(
-     *     path="/api/ubicaciones-almacen",
+     *     path="/ubicaciones-almacen",
      *     tags={"UbicacionesAlmacen"},
      *     summary="Registrar una ubicación dentro de un almacén",
      *     @OA\RequestBody(
@@ -92,7 +84,7 @@ class UbicacionAlmacenController extends Controller
      * Consultar una ubicación por ID
      *
      * @OA\Get(
-     *     path="/api/ubicaciones-almacen/{id}",
+     *     path="/ubicaciones-almacen/{id}",
      *     tags={"UbicacionesAlmacen"},
      *     summary="Obtener una ubicación específica",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -115,7 +107,7 @@ class UbicacionAlmacenController extends Controller
      * Actualizar una ubicación de almacén
      *
      * @OA\Put(
-     *     path="/api/ubicaciones-almacen/{id}",
+     *     path="/ubicaciones-almacen/{id}",
      *     tags={"UbicacionesAlmacen"},
      *     summary="Actualizar ubicación en almacén",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -156,7 +148,7 @@ class UbicacionAlmacenController extends Controller
      * Eliminar una ubicación de almacén
      *
      * @OA\Delete(
-     *     path="/api/ubicaciones-almacen/{id}",
+     *     path="/ubicaciones-almacen/{id}",
      *     tags={"UbicacionesAlmacen"},
      *     summary="Eliminar ubicación",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),

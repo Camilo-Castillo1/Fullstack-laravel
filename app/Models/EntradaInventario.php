@@ -3,6 +3,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Usuario;
+use App\Models\Lote;
+
 
 class EntradaInventario extends Model
 {

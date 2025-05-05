@@ -18,14 +18,16 @@ return new class extends Migration {
             $table->string('telefono', 20)->nullable();
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamp('ultimo_acceso')->nullable();
-            $table->timestamp('fecha_creacion')->useCurrent();
-            $table->timestamp('fecha_actualizacion')->default(now())->useCurrentOnUpdate();
-
-
+            #$table->timestamp('fecha_creacion')->useCurrent();
+            #$table->timestamp('fecha_actualizacion')->default(now())->useCurrentOnUpdate();
+            #se recomienda no usar estos dos campos, ya que se pueden obtener de la tabla de auditoria
+            #$table->unsignedBigInteger('creado_por')->nullable();
+            #$table->unsignedBigInteger('actualizado_por')->nullable();
+            #manejar auditoria avanzada con el paquete spatie/laravel-auditor
             $table->unsignedBigInteger('id_rol');
             $table->foreign('id_rol')->references('id')->on('roles')->onDelete('cascade');
 
-            $table->timestamps();
+            $table->timestamps(); // craeate created_at and updated_at automaticos
         });
     }
 

@@ -5,15 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SalidaInventario;
 
-/**
-* @OA\Info(
-*     title="API de Salidas de Inventario",
-*     version="1.0",
-*     description="Gestión de movimientos de salida de inventario"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
+
 
 /**
  * @OA\Schema(
@@ -36,7 +28,7 @@ class SalidaInventarioController extends Controller
      * Listar todas las salidas de inventario
      *
      * @OA\Get(
-     *     path="/api/salidas-inventario",
+     *     path="/salidas-inventario",
      *     tags={"SalidasInventario"},
      *     summary="Listar salidas de inventario",
      *     @OA\Response(
@@ -55,7 +47,7 @@ class SalidaInventarioController extends Controller
      * Registrar una nueva salida de inventario
      *
      * @OA\Post(
-     *     path="/api/salidas-inventario",
+     *     path="/salidas-inventario",
      *     tags={"SalidasInventario"},
      *     summary="Registrar salida de inventario",
      *     @OA\RequestBody(
@@ -96,7 +88,7 @@ class SalidaInventarioController extends Controller
      * Obtener una salida por ID
      *
      * @OA\Get(
-     *     path="/api/salidas-inventario/{id}",
+     *     path="/salidas-inventario/{id}",
      *     tags={"SalidasInventario"},
      *     summary="Consultar salida por ID",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -119,7 +111,7 @@ class SalidaInventarioController extends Controller
      * Actualizar una salida existente
      *
      * @OA\Put(
-     *     path="/api/salidas-inventario/{id}",
+     *     path="/salidas-inventario/{id}",
      *     tags={"SalidasInventario"},
      *     summary="Actualizar salida de inventario",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
@@ -158,7 +150,7 @@ class SalidaInventarioController extends Controller
      * Eliminar una salida de inventario
      *
      * @OA\Delete(
-     *     path="/api/salidas-inventario/{id}",
+     *     path="/salidas-inventario/{id}",
      *     tags={"SalidasInventario"},
      *     summary="Eliminar salida de inventario",
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),

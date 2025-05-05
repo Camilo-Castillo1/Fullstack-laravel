@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->text('descripcion')->nullable();
             $table->unsignedBigInteger('categoria_id');
             $table->decimal('precio_unitario', 10, 2);
-            $table->integer('stock_minimo');
+            $table->integer('stock_minimo'); //no se hace dentro de la migración si no en el swagger
             $table->enum('estado', ['activo', 'inactivo']);
             $table->timestamps();
 

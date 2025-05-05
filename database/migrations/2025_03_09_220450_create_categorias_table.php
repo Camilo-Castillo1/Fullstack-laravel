@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 255);
+            $table->string('nombre', 255)->unique();// restrinjo el campo para evitar duplicados
             $table->text('descripcion')->nullable();
             $table->timestamps();
         });

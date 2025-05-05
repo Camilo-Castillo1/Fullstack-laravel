@@ -26,3 +26,4 @@ return new class extends Migration {
         Schema::dropIfExists('control_temperatura');
     }
 };
+//bien

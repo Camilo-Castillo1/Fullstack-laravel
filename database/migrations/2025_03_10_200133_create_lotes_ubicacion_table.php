@@ -26,8 +26,9 @@ return new class extends Migration {
                 ->onDelete('cascade');
 
             // Agregar timestamps (sin `ON UPDATE CURRENT_TIMESTAMP`)
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->nullable(); // Se actualizará manualmente
+            #$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            #$table->timestamp('updated_at')->nullable(); // Se actualizará manualmente
+            $table ->timestamps(); //hace lo mismo que las dos lineas de arriba pero lo hace de una vez
         });
     }
 
