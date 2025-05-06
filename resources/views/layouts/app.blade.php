@@ -14,20 +14,19 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 </head>
 <body>
-
-    @include('layouts.navigation') {{-- Este menú puedes ajustarlo con Bootstrap --}}
+    @include('layouts.navigation')
 
     <div class="container mt-4">
         {{-- Encabezado opcional --}}
-        @isset($header)
+        @hasSection('header')
             <div class="alert alert-secondary">
-                <h4 class="mb-0">{{ $header }}</h4>
+                <h4 class="mb-0">@yield('header')</h4>
             </div>
-        @endisset
+        @endif
 
         {{-- Contenido principal --}}
         <main>
-            {{ $slot }}
+            @yield('content') {{-- ✅ Cambio importante --}}
         </main>
     </div>
 
@@ -35,7 +34,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-{{-- Este es el layout principal de la aplicación. Puedes personalizarlo según tus necesidades. --}}
-{{-- Aquí se incluye Bootstrap y se define la estructura básica de la página. --}}
-{{-- El contenido de cada vista se inyectará en el slot definido en este layout. --}}
-{{-- Puedes agregar más estilos o scripts según lo necesites. --}}
