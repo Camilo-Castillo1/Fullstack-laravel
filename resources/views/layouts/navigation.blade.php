@@ -1,105 +1,212 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Menú principal -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex items-center">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-indigo-600" />
-                    </a>
-                </div>
+<!-- Estilos Bootstrap y Bi -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-                <!-- Enlaces -->
+<!-- SIDEBAR LATERAL OCULTO -->
+<div id="sidebarMenu" class="position-fixed top-0 start-0 bg-white border-end shadow" style="width: 250px; height: 100vh; display: none; z-index: 1050; padding-top: 4.5rem;">
+    <ul class="nav flex-column px-3">
+        <li class="nav-item mb-2">
+            <a class="nav-link text-success fw-semibold" href="#"><i class="bi bi-search me-2"></i>Buscar Datos</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link text-primary fw-semibold" href="#"><i class="bi bi-clock-history me-2"></i>Acceso 24/7</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link text-danger fw-semibold" href="#"><i class="bi bi-printer me-2"></i>Impresión Rápida</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link text-info fw-semibold" href="#"><i class="bi bi-shield-lock me-2"></i>Seguridad</a>
+        </li>
+    </ul>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm py-3 fixed-top">
+    <div class="container">
+        <!-- Botón de menú lateral -->
+        <button id="toggleSidebar" class="btn btn-outline-success me-2 d-lg-none" type="button">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+
+        <a class="navbar-brand d-flex align-items-center fw-bold text-success" href="{{ route('dashboard') }}">
+            <img src="https://img.icons8.com/color/48/administrator-male.png" alt="Logo Admin" height="30" class="me-2">
+            AdminPanel
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-center">
                 @auth
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.*')">
-                        {{ __('Usuarios') }}
-                    </x-nav-link>
-                </div>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-bold text-success' : 'text-muted' }}" href="{{ route('dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('usuarios.*') ? 'active fw-bold text-success' : 'text-muted' }}" href="{{ route('usuarios.index') }}">Usuarios</a>
+                    </li>
                 @endauth
-            </div>
 
-            <!-- Menú de usuario -->
-            @auth
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none">
-                            <div>{{ Auth::user()->nombre }}</div>
-                            <div class="ms-1">
-                                <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                                    <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Perfil') }}
-                        </x-dropdown-link>
-
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                                {{ __('Cerrar sesión') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-            @endauth
-
-            <!-- Botón móvil -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                    </svg>
-                </button>
-            </div>
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" data-bs-toggle="dropdown">
+                            {{ Auth::user()->nombre }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end rounded-4">
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-success rounded-pill" href="{{ route('login') }}">Iniciar sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-success text-white rounded-pill" href="{{ route('register') }}">Regístrate</a>
+                    </li>
+                @endauth
+            </ul>
         </div>
     </div>
-
-    <!-- Menú responsive -->
-    @auth
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-
-            <x-responsive-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.*')">
-                {{ __('Usuarios') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Datos y opciones -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->nombre }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->correo }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Perfil') }}
-                </x-responsive-nav-link>
-
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Cerrar sesión') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
-    </div>
-    @endauth
 </nav>
+
+<!-- HERO -->
+<header class="text-white text-center py-5 mt-5" style="background: linear-gradient(135deg, #d2f4ea, #c1e0f7);">
+    <div class="container">
+        <h1 class="display-5 fw-bold text-success">Bienvenido al Panel Administrativo</h1>
+        <p class="lead text-dark">Gestiona usuarios, visualiza datos y controla operaciones desde un solo lugar.</p>
+        <img src="https://undraw.co/api/illustrations/7a2dd762-2d8f-47c2-a241-b3c181bedbd3" alt="Administrador" class="img-fluid mt-3" style="max-height: 280px;">
+    </div>
+</header>
+
+<!-- TARJETAS OVALADAS -->
+<section class="py-5" style="background-color: #f8fdfd;">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="p-4 shadow-sm rounded-pill bg-white border border-success-subtle">
+                    <i class="bi bi-people-fill fs-2 text-success"></i>
+                    <h5 class="mt-2">Usuarios activos</h5>
+                    <p class="text-muted small mb-0">Consulta el total de usuarios registrados y activos en el sistema.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 shadow-sm rounded-pill bg-white border border-primary-subtle">
+                    <i class="bi bi-bar-chart-line-fill fs-2 text-primary"></i>
+                    <h5 class="mt-2">Estadísticas</h5>
+                    <p class="text-muted small mb-0">Visualiza el rendimiento y los indicadores clave de tu organización.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 shadow-sm rounded-pill bg-white border border-info-subtle">
+                    <i class="bi bi-gear-fill fs-2 text-info"></i>
+                    <h5 class="mt-2">Configuraciones</h5>
+                    <p class="text-muted small mb-0">Administra las opciones generales y de seguridad del sistema.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TARJETAS INFERIORES PASTEL MODERNAS -->
+<section class="py-5" style="background-color: #ffffff;">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-md-6">
+                <div class="rounded-4 p-4 h-100 shadow-sm" style="background-color: #e8fdf5;">
+                    <div class="d-flex align-items-start">
+                        <img src="https://cdn-icons-png.flaticon.com/512/833/833593.png" width="64" class="me-3" alt="Buscar">
+                        <div>
+                            <h5 class="fw-bold text-dark">Buscar datos</h5>
+                            <p class="text-muted">Nuestro motor de búsqueda facilita encontrar información en grandes volúmenes de datos.</p>
+                            <a href="#" class="text-decoration-none text-success">Leer más →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="rounded-4 p-4 h-100 shadow-sm" style="background-color: #f5ecfd;">
+                    <div class="d-flex align-items-start">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" width="64" class="me-3" alt="24 horas">
+                        <div>
+                            <h5 class="fw-bold text-dark">Acceso 24/7</h5>
+                            <p class="text-muted">Accede a tu información desde cualquier dispositivo y a cualquier hora.</p>
+                            <a href="#" class="text-decoration-none text-primary">Leer más →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="rounded-4 p-4 h-100 shadow-sm" style="background-color: #fdeef1;">
+                    <div class="d-flex align-items-start">
+                        <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" width="64" class="me-3" alt="Imprimir">
+                        <div>
+                            <h5 class="fw-bold text-dark">Impresión rápida</h5>
+                            <p class="text-muted">Genera e imprime reportes de forma eficiente y con diseño profesional.</p>
+                            <a href="#" class="text-decoration-none text-danger">Leer más →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="rounded-4 p-4 h-100 shadow-sm" style="background-color: #e3f4fd;">
+                    <div class="d-flex align-items-start">
+                        <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" width="64" class="me-3" alt="Seguridad">
+                        <div>
+                            <h5 class="fw-bold text-dark">Seguridad avanzada</h5>
+                            <p class="text-muted">Tus datos están protegidos mediante cifrado y múltiples capas de autenticación.</p>
+                            <a href="#" class="text-decoration-none text-info">Leer más →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JS Bootstrap y Sidebar toggle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebarMenu');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.style.display = (sidebar.style.display === 'block') ? 'none' : 'block';
+        });
+    });
+</script>
+<script>
+    // Cerrar el sidebar al hacer clic fuera de él
+    document.addEventListener('click', function (event) {
+        const sidebar = document.getElementById('sidebarMenu');
+        const toggleBtn = document.getElementById('toggleSidebar');
+
+        if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+            sidebar.style.display = 'none';
+        }
+    });
+</script>
+<script>
+    // Cerrar el sidebar al hacer clic en un enlace
+    const sidebarLinks = document.querySelectorAll('#sidebarMenu .nav-link');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('sidebarMenu').style.display = 'none';
+        });
+    });
+</script>
+<script>
+    // Mostrar el sidebar al cargar la página si es necesario
+    window.addEventListener('load', function () {
+        const sidebar = document.getElementById('sidebarMenu');
+        if (window.innerWidth >= 992) {
+            sidebar.style.display = 'block';
+        }
+    });
+    // Ajustar el sidebar al redimensionar la ventana
