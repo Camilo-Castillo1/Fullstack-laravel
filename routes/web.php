@@ -2,53 +2,45 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UsuarioController; // Ensure this matches the actual namespace of UsuarioController
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\UsuarioController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
+// Página pública
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Dashboard privado
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Ruta personalizada para mostrar la vista de usuarios
+Route::get('/usuarios/panel', [UserController::class, 'index'])
+    ->name('usuarios.panel')
+    ->middleware(['auth', 'role:admin']);
+
+// Rutas de perfil de usuario autenticado
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::resource('usuarios', UserController::class);
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-    Route::put('/password', [\App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('password.update');
-    Route::delete('/profile', [\App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('usuarios', UsuarioController::class);
-});
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('usuarios', UserController::class);
 });
 
+// Rutas CRUD de usuarios solo para admin (sin prefijo "admin/")
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('usuarios', UserController::class);
+    // Si necesitas que las rutas estén en /admin/usuarios, activa esta sección:
+Route::prefix('admin')->name('admin.')->group(function () {
+     Route::resource('usuarios', UsuarioController::class);
+     });
+});
 
 require __DIR__.'/auth.php';

@@ -1,69 +1,93 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold">Crear Usuario</h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-6 px-6">
-        <form action="{{ route('usuarios.store') }}" method="POST">
-            @csrf
+@section('header')
+    Crear Usuario
+@endsection
 
-            {{-- Nombre --}}
-            <div class="mb-4">
-                <x-input-label for="nombre" value="Nombre" />
-                <x-text-input id="nombre" name="nombre" type="text" class="mt-1 block w-full" required autofocus />
-                <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+@section('content')
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <form action="{{ route('usuarios.store') }}" method="POST">
+                            @csrf
+
+                            {{-- Nombre --}}
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre') }}" required autofocus>
+                                @error('nombre')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Apellido --}}
+                            <div class="mb-3">
+                                <label for="apellido" class="form-label">Apellido</label>
+                                <input type="text" id="apellido" name="apellido" class="form-control" value="{{ old('apellido') }}" required>
+                                @error('apellido')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Correo --}}
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo Electrónico</label>
+                                <input type="email" id="correo" name="correo" class="form-control" value="{{ old('correo') }}" required>
+                                @error('correo')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Contraseña --}}
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                                @error('password')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Teléfono --}}
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="text" id="telefono" name="telefono" class="form-control" value="{{ old('telefono') }}">
+                                @error('telefono')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Roles --}}
+                            <div class="mb-3">
+                                <label for="roles" class="form-label">Rol(es)</label>
+                                <select name="roles[]" id="roles" class="form-select" multiple required>
+                                    @foreach ($roles as $rol)
+                                        <option value="{{ $rol->name }}" {{ collect(old('roles'))->contains($rol->name) ? 'selected' : '' }}>
+                                            {{ $rol->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('roles')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- Botones --}}
+                            <div class="d-flex align-items-center mt-4">
+                                <button type="submit" class="btn btn-success me-3">
+                                    <i class="bi bi-save me-1"></i> Guardar Usuario
+                                </button>
+                                <a href="{{ route('usuarios.index') }}" class="text-decoration-none text-secondary">
+                                    Cancelar
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
-
-            {{-- Apellido --}}
-            <div class="mb-4">
-                <x-input-label for="apellido" value="Apellido" />
-                <x-text-input id="apellido" name="apellido" type="text" class="mt-1 block w-full" required />
-                <x-input-error :messages="$errors->get('apellido')" class="mt-2" />
-            </div>
-
-            {{-- Correo --}}
-            <div class="mb-4">
-                <x-input-label for="correo" value="Correo Electrónico" />
-                <x-text-input id="correo" name="correo" type="email" class="mt-1 block w-full" required />
-                <x-input-error :messages="$errors->get('correo')" class="mt-2" />
-            </div>
-
-            {{-- Contraseña --}}
-            <div class="mb-4">
-                <x-input-label for="password" value="Contraseña" />
-                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" required />
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
-
-            {{-- Confirmación de contraseña --}}
-            <div class="mb-4">
-                <x-input-label for="password_confirmation" value="Confirmar Contraseña" />
-                <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" required />
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-            </div>
-            {{-- Teléfono (opcional) --}}
-            <div class="mb-4">
-                <x-input-label for="telefono" value="Teléfono" />
-                <x-text-input id="telefono" name="telefono" type="text" class="mt-1 block w-full" />
-                <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
-            </div>
-
-            {{-- Roles --}}
-            <div class="mb-4">
-                <x-input-label for="roles" value="Rol(es)" />
-                <select name="roles[]" id="roles" class="mt-1 block w-full" multiple required>
-                    @foreach ($roles as $rol)
-                        <option value="{{ $rol->name }}">{{ $rol->name }}</option>
-                    @endforeach
-                </select>
-                <x-input-error :messages="$errors->get('roles')" class="mt-2" />
-            </div>
-
-            <x-primary-button class="mt-4">
-                Guardar Usuario
-            </x-primary-button>
-
-            <a href="{{ route('usuarios.index') }}" class="ml-4 text-sm text-gray-600 hover:underline">Cancelar</a>
-        </form>
+        </div>
     </div>
-</x-app-layout>
+@endsection

@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $usuarios = User::with('roles')->get();
-        return view('usuarios.index', compact('usuarios'));
+        return view('usuarios.usuarios', compact('usuarios'));
     }
 
     /**
@@ -36,7 +36,7 @@ class UserController extends Controller
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'correo' => 'required|email|unique:users,correo',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
             'roles' => 'required|array'
         ]);
 

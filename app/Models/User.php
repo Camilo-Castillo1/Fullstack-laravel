@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasRoles, Notifiable;
 
-    protected $table = 'user'; // <- Singular
+    protected $table = 'users'; // <- Singular
 
     protected $fillable = [
         'nombre',
