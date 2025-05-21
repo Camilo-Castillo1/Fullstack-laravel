@@ -13,7 +13,7 @@
 <div class="flex-grow-1 overflow-auto px-3 py-2">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link text-white {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <a href="{{ route('admin.dashboard') }}" class="nav-link text-white {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <i class="bi bi-house-door me-2"></i> Dashboard
             </a>
         </li>

@@ -32,9 +32,9 @@ class AuthenticatedSessionController extends Controller
 
         // Redireccionar según el rol del usuario
         if ($user->hasRole('admin')) {
-            return redirect()->route('admin.usuarios.index');
+            return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('administrador de bodega')) {
-            return redirect()->route('bodega.productos.index');
+            return redirect()->route('bodega.dashboard');
         } elseif ($user->hasRole('bodeguero')) {
             return redirect()->route('bodeguero.productos.index');
         }
