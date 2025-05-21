@@ -26,7 +26,7 @@ class CategoriaController extends Controller
 
         Categoria::create($request->only('nombre', 'descripcion'));
 
-        return redirect()->route('categorias.index')->with('success', 'Categoría creada correctamente.');
+        return redirect()->route('admin.categorias.index')->with('success', 'Categoría creada correctamente.');
     }
 
     public function edit(Categoria $categoria)
@@ -43,13 +43,21 @@ class CategoriaController extends Controller
 
         $categoria->update($request->only('nombre', 'descripcion'));
 
-        return redirect()->route('categorias.index')->with('success', 'Categoría actualizada correctamente.');
+        return redirect()->route('admin.categorias.index')->with('success', 'Categoría actualizada correctamente.');
     }
 
     public function destroy(Categoria $categoria)
-    {
-        $categoria->delete();
-
-        return redirect()->route('categorias.index')->with('success', 'Categoría eliminada.');
+{
+    // Verifica si la categoría tiene productos asociados
+    if ($categoria->productos()->exists()) {
+        return redirect()->route('categorias.index')
+            ->with('error', 'No se puede eliminar la categoría porque tiene productos asociados.');
     }
+
+    // Elimina la categoría si no tiene relaciones
+    $categoria->delete();
+
+    return redirect()->route('admin.categorias.index')->with('success', 'Categoría eliminada correctamente.');
+}
+
 }

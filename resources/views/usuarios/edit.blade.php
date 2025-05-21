@@ -9,7 +9,7 @@
 
             <div class="card bg-dark text-white shadow-sm border-0">
                 <div class="card-body">
-                    <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
+                    <form action="{{ route('admin.usuarios.update', $usuario->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -78,7 +78,7 @@
                             <button type="submit" class="btn btn-success me-3">
                                 <i class="bi bi-save me-1"></i> Actualizar Usuario
                             </button>
-                            <a href="{{ route('usuarios.index') }}" class="text-decoration-none text-secondary">
+                            <a href="{{ route('admin.usuarios.index') }}" class="text-decoration-none text-secondary">
                                 Cancelar
                             </a>
                         </div>

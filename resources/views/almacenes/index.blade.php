@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Listado de Almacenes</h5>
-                <a href="{{ route('almacenes.create') }}" class="btn btn-primary rounded-pill">
+                <a href="{{ route('admin.almacenes.create') }}" class="btn btn-primary rounded-pill">
                     <i class="bi bi-plus-circle me-1"></i> Nuevo Almacén
                 </a>
             </div>
@@ -42,10 +42,10 @@
                                     <td>{{ $almacen->ubicacion }}</td>
                                     <td class="text-center">{{ $almacen->capacidad_maxima }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('almacenes.edit', $almacen->id) }}" class="btn btn-warning btn-sm me-1">
+                                        <a href="{{ route('admin.almacenes.edit', $almacen->id) }}" class="btn btn-warning btn-sm me-1">
                                             <i class="bi bi-pencil-square"></i> Editar
                                         </a>
-                                        <form action="{{ route('almacenes.destroy', $almacen->id) }}" method="POST" class="d-inline"
+                                        <form action="{{ route('admin.almacenes.destroy', $almacen->id) }}" method="POST" class="d-inline"
                                               onsubmit="return confirm('¿Eliminar este almacén?');">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,16 +24,27 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // ✅ Adaptar para usar "correo" en lugar de "email"
-        $request->authenticate(); // ya usa correo gracias a LoginRequest modificado
-
+        // Autenticar con el campo 'correo'
+        $request->authenticate();
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $user = Auth::user();
+
+        // Redireccionar según el rol del usuario
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.usuarios.index');
+        } elseif ($user->hasRole('administrador de bodega')) {
+            return redirect()->route('bodega.productos.index');
+        } elseif ($user->hasRole('bodeguero')) {
+            return redirect()->route('bodeguero.productos.index');
+        }
+
+        // Si no tiene ningún rol esperado, redirigir al home
+        return redirect('/');
     }
 
     /**
-     * Cierra sesión.
+     * Cierra la sesión del usuario.
      */
     public function destroy(Request $request): RedirectResponse
     {

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -37,4 +38,18 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
         });
     }
+    public function redirectTo()
+{
+    $user = Auth::user();
+
+    if ($user->hasRole('admin')) {
+        return route('admin.usuarios.index');
+    } elseif ($user->hasRole('administrador de bodega')) {
+        return route('bodega.productos.index');
+    } elseif ($user->hasRole('bodeguero')) {
+        return route('bodeguero.productos.index');
+    }
+
+    return '/';
+}
 }

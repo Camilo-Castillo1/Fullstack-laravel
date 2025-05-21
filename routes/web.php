@@ -1,30 +1,39 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Admin\UsuarioController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
+use App\Http\Controllers\Admin\RolController;
+use App\Http\Controllers\Admin\PermisoController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\AlmacenController;
+use App\Http\Controllers\UbicacionAlmacenController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\LoteController;
+use App\Http\Controllers\AlertaVencimientoController;
+use App\Http\Controllers\EntradaInventarioController;
+use App\Http\Controllers\SalidaInventarioController;
+use App\Http\Controllers\ControlTemperaturaController;
+use App\Http\Controllers\PoliticaInventarioController;
+use App\Http\Controllers\LoteUbicacionController;
+use App\Http\Controllers\Admin\RoleController;
 
 // Página pública
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Dashboard privado
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Dashboard redireccionado por rol
+Route::middleware('auth')->get('admin.dashboard', function () {
+    if (auth()->user()->hasRole('admin')) {
+        return redirect()->route('admin.dashboard');
+    } elseif (auth()->user()->hasRole('administrador de bodega')) {
+        return redirect()->route('bodega.productos.index');
+    } elseif (auth()->user()->hasRole('bodeguero')) {
+        return redirect()->route('bodeguero.productos.index');
+    }
+})->name('dashboard');
 
-// Ruta personalizada para mostrar la vista de usuarios
-Route::get('/usuarios/panel', [UserController::class, 'index'])
-    ->name('usuarios.panel')
-    ->middleware(['auth', 'role:admin']);
 
 // Rutas de perfil de usuario autenticado
 Route::middleware('auth')->group(function () {
@@ -32,15 +41,60 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/debug-auth', function () {
+        return [
+            'auth_id' => auth()->id(),
+            'user_id' => auth()->user()?->id,
+            'correo' => auth()->user()?->correo,
+            'roles' => auth()->user()?->getRoleNames(),
+        ];
+    });
 });
 
-// Rutas CRUD de usuarios solo para admin (sin prefijo "admin/")
-Route::middleware(['auth', 'role:admin'])->group(function () {
+// Rutas protegidas para ADMIN (prefijo /admin)
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('usuarios', UserController::class);
-    // Si necesitas que las rutas estén en /admin/usuarios, activa esta sección:
-Route::prefix('admin')->name('admin.')->group(function () {
-     Route::resource('usuarios', UsuarioController::class);
-     });
+    Route::resource('categorias', CategoriaController::class);
+    Route::resource('almacenes', AlmacenController::class)->parameters(['almacenes' => 'almacen']);
+     Route::resource('ubicaciones', UbicacionAlmacenController::class)->parameters([
+        'ubicaciones' => 'ubicacion'
+    ]);
+    Route::resource('productos', ProductoController::class);
+    Route::resource('lotes', LoteController::class)->parameters(['lotes' => 'lote']);
+    Route::resource('entradas', EntradaInventarioController::class)->except(['show']);
+    Route::resource('salidas', SalidaInventarioController::class)->except(['show']);
+    Route::resource('politicas', PoliticaInventarioController::class);
+    Route::resource('lote-ubicacion', LoteUbicacionController::class)->parameters(['lote-ubicacion' => 'loteUbicacion']);
+    Route::get('lote-ubicacion/{id_lote}/{id_ubicacion}/edit', [LoteUbicacionController::class, 'edit'])->name('lote-ubicacion.edit');
+    Route::put('lote-ubicacion/{id_lote}/{id_ubicacion}', [LoteUbicacionController::class, 'update'])->name('lote-ubicacion.update');
+    Route::delete('lote-ubicacion/{id_lote}/{id_ubicacion}', [LoteUbicacionController::class, 'destroy'])->name('lote-ubicacion.destroy');
+    Route::resource('roles', RolController::class);
+    Route::resource('alertas', AlertaVencimientoController::class)->only(['index', 'show']);
+    Route::resource('temperaturas', ControlTemperaturaController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+     Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
 
-require __DIR__.'/auth.php';
+// Rutas para ADMINISTRADOR DE BODEGA (prefijo /bodega)
+Route::middleware(['auth', 'role:administrador de bodega'])->prefix('bodega')->name('bodega.')->group(function () {
+    Route::resource('productos', ProductoController::class)->except(['destroy']);
+    Route::resource('lotes', LoteController::class)->except(['destroy']);
+    Route::resource('entradas', EntradaInventarioController::class)->only(['index', 'create', 'store']);
+    Route::resource('salidas', SalidaInventarioController::class)->only(['index', 'create', 'store']);
+    Route::resource('alertas', AlertaVencimientoController::class)->only(['index']);
+    Route::resource('ubicaciones', UbicacionAlmacenController::class)->only(['index']);
+    Route::resource('temperaturas', ControlTemperaturaController::class)->only(['index']);
+});
+
+// Rutas para BODEGUERO (prefijo /bodeguero)
+Route::middleware(['auth', 'role:bodeguero'])->prefix('bodeguero')->name('bodeguero.')->group(function () {
+    Route::resource('productos', ProductoController::class)->only(['index']);
+    Route::resource('lotes', LoteController::class)->only(['index']);
+    Route::resource('entradas', EntradaInventarioController::class)->only(['index', 'create', 'store']);
+    Route::resource('salidas', SalidaInventarioController::class)->only(['index', 'create', 'store']);
+    Route::resource('alertas', AlertaVencimientoController::class)->only(['index']);
+});
+
+require __DIR__ . '/auth.php';

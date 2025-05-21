@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Listado de Categorías</h5>
-                <a href="{{ route('categorias.create') }}" class="btn btn-primary rounded-pill">
+                <a href="{{ route('admin.categorias.create') }}" class="btn btn-primary rounded-pill">
                     <i class="bi bi-plus-circle me-1"></i> Nueva Categoría
                 </a>
             </div>
@@ -40,10 +40,10 @@
                                     <td>{{ $categoria->nombre }}</td>
                                     <td>{{ $categoria->descripcion }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('categorias.edit', $categoria->id) }}" class="btn btn-warning btn-sm me-1">
+                                        <a href="{{ route('admin.categorias.edit', $categoria->id) }}" class="btn btn-warning btn-sm me-1">
                                             <i class="bi bi-pencil-square"></i> Editar
                                         </a>
-                                        <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" class="d-inline"
+                                        <form action="{{ route('admin.categorias.destroy', $categoria->id) }}" method="POST" class="d-inline"
                                               onsubmit="return confirm('¿Eliminar esta categoría?');">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

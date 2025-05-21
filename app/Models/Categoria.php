@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Producto;
 
 class Categoria extends Model
 {
@@ -12,5 +13,10 @@ class Categoria extends Model
         'nombre',
         'descripcion',
     ];
-}
 
+    // ✅ Relación: una categoría tiene muchos productos
+    public function productos()
+    {
+        return $this->hasMany(Producto::class, 'categoria_id');
+    }
+}

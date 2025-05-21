@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     public function username()
     {
-        return 'correo';
+        return 'id';
     }
 
 }

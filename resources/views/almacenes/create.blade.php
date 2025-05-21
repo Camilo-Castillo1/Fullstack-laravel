@@ -8,7 +8,7 @@
         <div class="card-body">
             <h5 class="mb-4">Nuevo Almacén</h5>
 
-            <form method="POST" action="{{ route('almacenes.store') }}">
+            <form method="POST" action="{{ route('admin.almacenes.store') }}">
                 @csrf
 
                 <div class="mb-3">
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('almacenes.index') }}" class="btn btn-secondary me-2">Cancelar</a>
+                    <a href="{{ route('admin.almacenes.index') }}" class="btn btn-secondary me-2">Cancelar</a>
                     <button type="submit" class="btn btn-success">
                         <i class="bi bi-save me-1"></i> Guardar
                     </button>

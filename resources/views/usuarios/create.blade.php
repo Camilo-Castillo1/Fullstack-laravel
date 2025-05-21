@@ -11,7 +11,7 @@
 
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <form action="{{ route('usuarios.store') }}" method="POST">
+                        <form action="{{ route('admin.usuarios.store') }}" method="POST">
                             @csrf
 
                             {{-- Nombre --}}
@@ -79,7 +79,7 @@
                                 <button type="submit" class="btn btn-success me-3">
                                     <i class="bi bi-save me-1"></i> Guardar Usuario
                                 </button>
-                                <a href="{{ route('usuarios.index') }}" class="text-decoration-none text-secondary">
+                                <a href="{{ route('admin.usuarios.index') }}" class="text-decoration-none text-secondary">
                                     Cancelar
                                 </a>
                             </div>

@@ -4,19 +4,29 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\GenerarAlertasVencimiento;
 
 class Kernel extends ConsoleKernel
 {
     /**
-     * Define the application's command schedule.
+     * Registrar comandos personalizados.
+     */
+    protected $commands = [
+        GenerarAlertasVencimiento::class,
+        \App\Console\Commands\GenerarAlertasVencimiento::class,
+    ];
+
+    /**
+     * Definir tareas programadas.
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Ejecutar el comando todos los días a las 8:00 AM
+        $schedule->command('app:generar-alertas-vencimiento')->dailyAt('08:00');
     }
 
     /**
-     * Register the commands for the application.
+     * Cargar comandos adicionales.
      */
     protected function commands(): void
     {

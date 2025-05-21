@@ -50,7 +50,7 @@ class UserController extends Controller
 
         $usuario->syncRoles($request->roles); // Asignar roles
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
 
     /**
@@ -86,7 +86,7 @@ class UserController extends Controller
 
         $usuario->syncRoles($request->roles);
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -95,6 +95,6 @@ class UserController extends Controller
     public function destroy(User $usuario)
     {
         $usuario->delete();
-        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario eliminado.');
     }
 }

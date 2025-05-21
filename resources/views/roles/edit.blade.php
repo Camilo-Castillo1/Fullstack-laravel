@@ -1,40 +1,40 @@
 @extends('layouts.app')
 
-@section('header', 'Editar Rol')
-
 @section('content')
-<div class="container py-4">
-    <div class="card shadow border-0" id="rolesCard">
-        <div class="card-body">
-            <h5 class="mb-4">Editar Rol</h5>
+<div class="container">
+    <h2 class="mb-4">Editar Rol: {{ $role->name }}</h2>
 
-            <form method="POST" action="{{ route('admin.roles.update', $rol->id) }}">
-                @csrf @method('PUT')
+    <form action="{{ route('admin.roles.update', $role) }}" method="POST">
+        @csrf @method('PUT')
 
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre del Rol</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre', $rol->nombre) }}" required>
-                    @error('nombre')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="descripcion" class="form-label">Descripción</label>
-                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ old('descripcion', $rol->descripcion) }}</textarea>
-                    @error('descripcion')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary me-2">Cancelar</a>
-                    <button type="submit" class="btn btn-success">
-                        <i class="bi bi-check-circle me-1"></i> Actualizar
-                    </button>
-                </div>
-            </form>
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre del Rol:</label>
+            <input type="text" name="name" class="form-control" value="{{ $role->name }}" required>
         </div>
-    </div>
+
+        <h5 class="mt-4">Modificar Permisos:</h5>
+
+        @foreach($grupos as $clave => $titulo)
+            <div class="card mb-3">
+                <div class="card-header fw-bold">{{ $titulo }}</div>
+                <div class="card-body row">
+                    @foreach ($permisos->filter(fn($p) => str_contains($p->name, $clave)) as $permiso)
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input type="checkbox" name="permissions[]" value="{{ $permiso->name }}"
+                                    class="form-check-input"
+                                    {{ in_array($permiso->name, $rolePermissions) ? 'checked' : '' }}>
+                                <label class="form-check-label">{{ $permiso->name }}</label>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Actualizar Rol
+        </button>
+    </form>
 </div>
 @endsection

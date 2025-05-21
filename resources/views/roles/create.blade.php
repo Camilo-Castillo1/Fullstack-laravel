@@ -1,30 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <h3>Crear Nuevo Rol</h3>
+<div class="container">
+    <h2 class="mb-4">Crear Nuevo Rol</h2>
 
-    <form action="{{ route('admin.roles.store') }}" method="POST" class="mt-3">
+    <form action="{{ route('admin.roles.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre del Rol</label>
-            <input type="text" name="nombre" id="nombre" class="form-control" required>
-            <small class="form-text text-muted">Ejemplo: Administrador, Técnico, Auditor</small>
+            <label for="name" class="form-label">Nombre del Rol:</label>
+            <input type="text" name="name" class="form-control" required>
         </div>
 
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción</label>
-            <textarea name="descripcion" id="descripcion" class="form-control" rows="3"></textarea>
-        </div>
+        <h5 class="mt-4">Asignar Permisos por Módulo:</h5>
 
-        <button type="submit" class="btn btn-success">Guardar Rol</button>
+        @foreach($grupos as $clave => $titulo)
+            <div class="card mb-3">
+                <div class="card-header fw-bold">{{ $titulo }}</div>
+                <div class="card-body row">
+                    @foreach ($permisos->filter(fn($p) => str_contains($p->name, $clave)) as $permiso)
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input type="checkbox" name="permissions[]" value="{{ $permiso->name }}" class="form-check-input">
+                                <label class="form-check-label">{{ $permiso->name }}</label>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+
+        <button type="submit" class="btn btn-success">
+            <i class="bi bi-save"></i> Guardar Rol
+        </button>
     </form>
 </div>
-
-<script>
-    document.getElementById('nombre').addEventListener('input', function () {
-        this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '');
-    });
-</script>
 @endsection

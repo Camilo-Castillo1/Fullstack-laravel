@@ -12,7 +12,7 @@
         @endif
 
         <div class="d-flex justify-content-end mb-3">
-            <a href="{{ route('usuarios.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary">
                 <i class="bi bi-person-plus-fill me-1"></i> Crear Usuario
             </a>
         </div>
@@ -45,10 +45,10 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn btn-warning btn-sm me-1">
+                                            <a href="{{ route('admin.usuarios.edit', $usuario->id) }}" class="btn btn-warning btn-sm me-1">
                                                 <i class="bi bi-pencil-square"></i> Editar
                                             </a>
-                                            <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST" class="d-inline"
+                                            <form action="{{ route('admin.usuarios.destroy', $usuario->id) }}" method="POST" class="d-inline"
                                                   onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');">
                                                 @csrf
                                                 @method('DELETE')
