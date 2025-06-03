@@ -110,11 +110,7 @@
                             <i class="bi bi-map me-2"></i> Ubicaciones
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('bodega.reportes.*') ? 'active' : '' }}" href="{{ route('bodega.reportes.index') }}">
-                            <i class="bi bi-file-earmark-text me-2"></i> Reportes
-                        </a>
-                    </li>
+
 
 
                 </ul>

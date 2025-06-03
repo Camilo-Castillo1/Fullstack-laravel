@@ -4,24 +4,24 @@
 
 @section('content')
 <div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded-4 border shadow-sm">
         <h4 class="mb-0 text-primary fw-bold">
             <i class="bi bi-thermometer-half me-2"></i> Registros de Temperatura
         </h4>
-        <a href="{{ route('admin.temperaturas.create') }}" class="btn btn-primary shadow-sm">
+        <a href="{{ route('admin.temperaturas.create') }}" class="btn btn-primary shadow-sm rounded-pill">
             <i class="bi bi-plus-circle me-1"></i> Nuevo Registro
         </a>
     </div>
 
-    <div class="card shadow border-0 animate__animated animate__fadeIn">
+    <div class="card shadow border-0 bg-white text-dark rounded-4 animate__animated animate__fadeIn">
         <div class="card-body">
             @if ($registros->isEmpty())
-                <div class="alert alert-info text-center">
+                <div class="alert alert-info text-center rounded-4">
                     <i class="bi bi-info-circle me-2"></i> No hay registros de temperatura.
                 </div>
             @else
-                <div class="table-responsive">
-                    <table id="tabla-temperaturas" class="table table-bordered table-hover text-center align-middle">
+                <div class="table-responsive rounded-4 overflow-hidden">
+                    <table id="tabla-temperaturas" class="table table-bordered table-hover text-center align-middle mb-0 bg-white rounded-4">
                         <thead class="table-light">
                             <tr>
                                 <th>#</th>
@@ -40,10 +40,10 @@
                                     <td>{{ \Carbon\Carbon::parse($registro->fecha_registro)->format('Y-m-d H:i') }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.temperaturas.edit', $registro->id) }}" class="btn btn-sm btn-outline-warning" title="Editar">
+                                            <a href="{{ route('admin.temperaturas.edit', $registro->id) }}" class="btn btn-sm btn-outline-warning rounded-pill" title="Editar">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{ $registro->id }})" title="Eliminar">
+                                            <button class="btn btn-sm btn-outline-danger rounded-pill" onclick="confirmDelete({{ $registro->id }})" title="Eliminar">
                                                 <i class="bi bi-trash3"></i>
                                             </button>
                                             <form id="delete-form-{{ $registro->id }}" action="{{ route('admin.temperaturas.destroy', $registro->id) }}" method="POST" style="display: none;">
@@ -64,6 +64,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
         $('#tabla-temperaturas').DataTable({

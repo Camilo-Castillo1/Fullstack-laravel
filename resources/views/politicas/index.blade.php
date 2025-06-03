@@ -4,24 +4,26 @@
 
 @section('content')
 <div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    {{-- Cabecera --}}
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded-4 border shadow-sm">
         <h4 class="mb-0 fw-bold text-success">
             <i class="bi bi-clipboard-check me-2"></i> Políticas de Inventario
         </h4>
-        <a href="{{ route('admin.politicas.create') }}" class="btn btn-success shadow-sm animate__animated animate__fadeIn">
+        <a href="{{ route('admin.politicas.create') }}" class="btn btn-success shadow-sm rounded-pill animate__animated animate__fadeIn">
             <i class="bi bi-plus-circle me-1"></i> Nueva Política
         </a>
     </div>
 
-    <div class="card shadow border-0 animate__animated animate__fadeInUp">
+    {{-- Tabla de contenido --}}
+    <div class="card shadow border-0 rounded-4 bg-white animate__animated animate__fadeInUp">
         <div class="card-body">
             @if ($politicas->isEmpty())
-                <div class="alert alert-info text-center">
+                <div class="alert alert-info text-center rounded-4">
                     <i class="bi bi-info-circle me-2"></i> No hay políticas registradas aún.
                 </div>
             @else
-                <div class="table-responsive">
-                    <table id="tabla-politicas" class="table table-bordered table-hover align-middle text-center">
+                <div class="table-responsive rounded-4 overflow-hidden">
+                    <table id="tabla-politicas" class="table table-bordered table-hover align-middle text-center mb-0 bg-white">
                         <thead class="table-light">
                             <tr>
                                 <th>#</th>
@@ -52,10 +54,10 @@
                                     <td>{{ \Carbon\Carbon::parse($politica->fecha_implementacion)->format('Y-m-d') }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.politicas.edit', $politica->id) }}" class="btn btn-sm btn-outline-warning">
+                                            <a href="{{ route('admin.politicas.edit', $politica->id) }}" class="btn btn-sm btn-outline-warning rounded-pill" title="Editar">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{ $politica->id }})">
+                                            <button class="btn btn-sm btn-outline-danger rounded-pill" onclick="confirmDelete({{ $politica->id }})" title="Eliminar">
                                                 <i class="bi bi-trash3"></i>
                                             </button>
                                             <form id="delete-form-{{ $politica->id }}" action="{{ route('admin.politicas.destroy', $politica->id) }}" method="POST" style="display: none;">

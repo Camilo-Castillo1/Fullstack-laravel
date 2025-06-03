@@ -3,100 +3,67 @@
 @section('header', 'Editar Perfil')
 
 @section('content')
-<style>
-    #perfilCard {
-        transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-
-    #perfilCard:hover {
-        transform: scale(1.02);
-    }
-
-    .dark-mode #perfilCard {
-        background-color: #2a3b5c !important;
-        color: #e2e8f0;
-    }
-
-    body:not(.dark-mode) #perfilCard {
-        background-color: #f8f9fa !important;
-        color: #212529;
-    }
-</style>
-
 <div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow border-0" id="perfilCard">
-                <div class="card-body">
-                    <h4 class="mb-4">
-                        <i class="bi bi-person-circle me-2"></i>Información del Perfil
-                    </h4>
+    <div class="mx-auto" style="max-width: 700px;">
+        <div class="card border-0 shadow rounded-4 px-4 py-3 bg-body text-body">
+            <div class="card-header bg-transparent border-0 pb-0">
+                <h5 class="fw-bold mb-1">
+                    <i class="bi bi-person-circle me-2"></i>
+                    Mi Información Personal
+                </h5>
+                <p class="text-muted small mb-0">Actualiza tu nombre, correo y otros datos de perfil.</p>
+            </div>
 
-                    @if (session('status') === 'profile-updated')
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" id="statusMessage">
-                            Guardado correctamente.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    @endif
+            <div class="card-body pt-3">
+                @if (session('status'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('status') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                @endif
 
-                    <form method="POST" action="{{ route('profile.update') }}">
-                        @csrf
-                        @method('PATCH')
+                <form method="POST" action="{{ route('profile.update') }}">
+                    @csrf
+                    @method('PUT')
 
+                    <div class="row g-3">
                         {{-- Nombre --}}
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control"
-                                   value="{{ old('nombre', $user->nombre) }}" required autofocus>
-                            @error('nombre') <div class="text-danger mt-1">{{ $message }}</div> @enderror
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" name="nombre" value="{{ old('nombre', Auth::user()->nombre) }}"
+                                   class="form-control shadow-sm" required>
                         </div>
 
                         {{-- Apellido --}}
-                        <div class="mb-3">
-                            <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" id="apellido" name="apellido" class="form-control"
-                                   value="{{ old('apellido', $user->apellido) }}" required>
-                            @error('apellido') <div class="text-danger mt-1">{{ $message }}</div> @enderror
+                        <div class="col-md-6">
+                            <label class="form-label">Apellido</label>
+                            <input type="text" name="apellido" value="{{ old('apellido', Auth::user()->apellido) }}"
+                                   class="form-control shadow-sm" required>
                         </div>
 
                         {{-- Correo --}}
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico</label>
-                            <input type="email" id="correo" name="correo" class="form-control"
-                                   value="{{ old('correo', $user->correo) }}" required>
-                            @error('correo') <div class="text-danger mt-1">{{ $message }}</div> @enderror
+                        <div class="col-md-12">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="email" name="correo" value="{{ old('correo', Auth::user()->correo) }}"
+                                   class="form-control shadow-sm" required>
                         </div>
 
                         {{-- Teléfono --}}
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="text" id="telefono" name="telefono" class="form-control"
-                                   value="{{ old('telefono', $user->telefono) }}">
-                            @error('telefono') <div class="text-danger mt-1">{{ $message }}</div> @enderror
+                        <div class="col-md-12">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" name="telefono" value="{{ old('telefono', Auth::user()->telefono) }}"
+                                   class="form-control shadow-sm">
                         </div>
+                    </div>
 
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-success">
-                                <i class="bi bi-save me-1"></i> Guardar Cambios
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                            <i class="bi bi-check-circle me-1"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
-{{-- Animación con JavaScript para el mensaje de éxito --}}
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const statusMsg = document.getElementById('statusMessage');
-        if (statusMsg) {
-            setTimeout(() => {
-                statusMsg.classList.add('fade');
-                statusMsg.classList.remove('show');
-            }, 3000);
-        }
-    });
-</script>
 @endsection

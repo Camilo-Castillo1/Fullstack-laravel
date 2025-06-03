@@ -4,24 +4,24 @@
 
 @section('content')
 <div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-white rounded-4 border shadow-sm">
         <h4 class="mb-0 text-primary fw-bold">
             <i class="bi bi-box-seam me-2"></i> Entradas de Inventario
         </h4>
-        <a href="{{ route('admin.entradas.create') }}" class="btn btn-success shadow-sm">
+        <a href="{{ route('admin.entradas.create') }}" class="btn btn-success shadow-sm rounded-pill">
             <i class="bi bi-plus-circle me-1"></i> Nueva Entrada
         </a>
     </div>
 
-    <div class="card shadow border-0 animate__animated animate__fadeIn">
+    <div class="card shadow border-0 bg-white text-dark rounded-4 animate__animated animate__fadeIn">
         <div class="card-body">
             @if ($entradas->isEmpty())
-                <div class="alert alert-info text-center" role="alert">
+                <div class="alert alert-info text-center rounded-4" role="alert">
                     <i class="bi bi-info-circle me-2"></i> No hay entradas registradas aún.
                 </div>
             @else
-                <div class="table-responsive">
-                    <table id="tabla-entradas" class="table table-striped table-bordered align-middle text-center">
+                <div class="table-responsive rounded-4 overflow-hidden">
+                    <table id="tabla-entradas" class="table table-striped table-bordered align-middle text-center mb-0 bg-white rounded-4">
                         <thead class="table-light">
                             <tr>
                                 <th>#</th>
@@ -46,15 +46,14 @@
                                     <td>{{ $entrada->motivo }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.entradas.edit', $entrada->id) }}" class="btn btn-sm btn-outline-warning" title="Editar">
+                                            <a href="{{ route('admin.entradas.edit', $entrada->id) }}" class="btn btn-sm btn-outline-warning rounded-pill" title="Editar">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{ $entrada->id }})" title="Eliminar">
+                                            <button class="btn btn-sm btn-outline-danger rounded-pill" onclick="confirmDelete({{ $entrada->id }})" title="Eliminar">
                                                 <i class="bi bi-trash3"></i>
                                             </button>
                                             <form id="delete-form-{{ $entrada->id }}" action="{{ route('admin.entradas.destroy', $entrada->id) }}" method="POST" style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
+                                                @csrf @method('DELETE')
                                             </form>
                                         </div>
                                     </td>
@@ -68,7 +67,8 @@
     </div>
 </div>
 
-<!-- SweetAlert para confirmar eliminación -->
+{{-- SweetAlert para eliminar --}}
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function confirmDelete(id) {
@@ -90,7 +90,6 @@
 </script>
 
 <!-- DataTables -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -100,14 +99,18 @@
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
             },
-            order: [[2, 'asc']], // Ordenar por producto
+            order: [[2, 'asc']],
             columnDefs: [
                 { targets: '_all', className: 'align-middle text-center' }
             ]
         });
     });
 </script>
+@endpush
 
-<!-- Animaciones -->
+@push('styles')
+<!-- DataTables + Animaciones -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+@endpush
 @endsection

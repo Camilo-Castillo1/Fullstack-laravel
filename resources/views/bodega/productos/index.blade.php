@@ -11,12 +11,7 @@
             <i class="bi bi-box-seam-fill me-2"></i>Gestión de Productos
         </h3>
         <div class="d-flex gap-2">
-            <a href="{{ route('productos.export.excel') }}" class="btn btn-outline-success shadow-sm">
-                <i class="bi bi-file-earmark-excel"></i> Excel
-            </a>
-            <a href="{{ route('productos.export.pdf') }}" class="btn btn-outline-danger shadow-sm">
-                <i class="bi bi-file-earmark-pdf"></i> PDF
-            </a>
+
             <a href="{{ route('bodega.productos.create') }}" class="btn btn-success shadow-sm">
                 <i class="bi bi-plus-circle-fill"></i> Agregar Producto
             </a>

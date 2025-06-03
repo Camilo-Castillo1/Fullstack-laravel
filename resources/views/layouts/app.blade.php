@@ -13,51 +13,79 @@
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
-    <!-- Animate.css (opcional para animaciones suaves) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .sidebar {
             height: 100vh;
             background-color: #1e3a8a;
             color: white;
-            transition: width 0.3s ease;
             width: 250px;
+            transition: width 0.3s ease;
         }
+
         .sidebar.collapsed {
             width: 80px;
         }
+
         .sidebar a {
             color: white;
         }
+
         .sidebar .nav-link.active {
-            background-color: rgba(255,255,255,0.15);
+            background-color: rgba(255, 255, 255, 0.15);
             border-radius: 0.375rem;
         }
+
         .content {
             margin-left: 250px;
             transition: margin-left 0.3s ease;
         }
+
         .content.collapsed {
             margin-left: 80px;
         }
-        .dark-mode {
-            background-color: #1e293b;
-            color: #e2e8f0;
+
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
         }
-        .dark-mode .sidebar {
-            background-color: #0f172a;
+
+        .card, .bg-body {
+            background-color: #ffffff !important;
+            color: #1e293b !important;
         }
-        .dark-mode .bg-white {
-            background-color: #1e293b !important;
+
+        .table thead, .table td, .table th {
+            color: #1e293b;
+        }
+
+        .form-check-label {
+            color: #1e293b;
+        }
+
+        .form-control {
+            background-color: #ffffff;
+            color: #1e293b;
+            border-color: #cbd5e1;
+        }
+
+        .alert {
+            background-color: #e2e8f0;
+            color: #1e293b;
+            border: none;
         }
     </style>
 </head>
-<body id="body">
+<body>
 
     {{-- Sidebar --}}
     @include('layouts.navigation')
@@ -65,41 +93,22 @@
     {{-- Contenido dinámico --}}
     <div class="content" id="mainContent">
         <main class="p-4">
-            {{-- Si hay encabezado --}}
             @hasSection('header')
-                <h4 class="mb-4 text-white">@yield('header')</h4>
+                <h4 class="mb-4">@yield('header')</h4>
             @endif
 
-            {{-- Contenido de la vista --}}
             @yield('content')
         </main>
     </div>
 
-    <!-- jQuery primero -->
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-    {{-- Scripts para dark mode y sidebar --}}
     <script>
-        // Modo oscuro persistente
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
-
-        document.getElementById('toggleDarkMode')?.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        });
-
         // Sidebar colapsable
         const sidebar = document.getElementById('sidebar');
         const content = document.getElementById('mainContent');
@@ -116,7 +125,6 @@
         });
     </script>
 
-    {{-- Sección de scripts adicionales desde las vistas --}}
     @stack('scripts')
 </body>
 </html>
