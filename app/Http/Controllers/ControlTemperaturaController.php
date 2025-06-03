@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ControlTemperatura;
 use App\Models\Almacen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ControlTemperaturaController extends Controller
 {
@@ -17,7 +18,19 @@ class ControlTemperaturaController extends Controller
             ->orderByDesc('fecha_registro')
             ->get();
 
-        return view('temperaturas.index', compact('registros'));
+        if (Auth::user()->hasRole('admin')) {
+            return view('temperaturas.index', compact('registros'));
+        }
+
+        if (Auth::user()->hasRole('administrador de bodega')) {
+            return view('bodega.temperaturas.index', compact('registros'));
+        }
+
+        if (Auth::user()->hasRole('bodeguero')) {
+            return view('bodeguero.temperaturas.index', compact('registros'));
+        }
+
+        abort(403);
     }
 
     /**
@@ -26,7 +39,20 @@ class ControlTemperaturaController extends Controller
     public function create()
     {
         $almacenes = Almacen::all();
-        return view('temperaturas.create', compact('almacenes'));
+
+        if (Auth::user()->hasRole('admin')) {
+            return view('temperaturas.create', compact('almacenes'));
+        }
+
+        if (Auth::user()->hasRole('administrador de bodega')) {
+            return view('bodega.temperaturas.create', compact('almacenes'));
+        }
+
+        if (Auth::user()->hasRole('bodeguero')) {
+            return view('bodeguero.temperaturas.create', compact('almacenes'));
+        }
+
+        abort(403);
     }
 
     /**
@@ -35,8 +61,8 @@ class ControlTemperaturaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'almacen_id' => 'required|exists:almacenes,id',
-            'temperatura' => 'required|numeric|min:-50|max:100',
+            'almacen_id'   => 'required|exists:almacenes,id',
+            'temperatura'  => 'required|numeric|min:-50|max:100',
         ]);
 
         ControlTemperatura::create([
@@ -45,8 +71,7 @@ class ControlTemperaturaController extends Controller
             'fecha_registro' => now(),
         ]);
 
-        return redirect()->route('admin.temperaturas.index')
-            ->with('success', 'Registro de temperatura guardado correctamente.');
+        return redirect()->route($this->routeByRole())->with('success', 'Registro de temperatura guardado correctamente.');
     }
 
     /**
@@ -57,7 +82,19 @@ class ControlTemperaturaController extends Controller
         $registro = ControlTemperatura::findOrFail($id);
         $almacenes = Almacen::all();
 
-        return view('temperaturas.edit', compact('registro', 'almacenes'));
+        if (Auth::user()->hasRole('admin')) {
+            return view('temperaturas.edit', compact('registro', 'almacenes'));
+        }
+
+        if (Auth::user()->hasRole('administrador de bodega')) {
+            return view('bodega.temperaturas.edit', compact('registro', 'almacenes'));
+        }
+
+        if (Auth::user()->hasRole('bodeguero')) {
+            return view('bodeguero.temperaturas.edit', compact('registro', 'almacenes'));
+        }
+
+        abort(403);
     }
 
     /**
@@ -66,8 +103,8 @@ class ControlTemperaturaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'almacen_id' => 'required|exists:almacenes,id',
-            'temperatura' => 'required|numeric|min:-50|max:100',
+            'almacen_id'   => 'required|exists:almacenes,id',
+            'temperatura'  => 'required|numeric|min:-50|max:100',
         ]);
 
         $registro = ControlTemperatura::findOrFail($id);
@@ -78,8 +115,7 @@ class ControlTemperaturaController extends Controller
             'fecha_registro' => now(),
         ]);
 
-        return redirect()->route('admin.temperaturas.index')
-            ->with('success', 'Registro actualizado correctamente.');
+        return redirect()->route($this->routeByRole())->with('success', 'Registro actualizado correctamente.');
     }
 
     /**
@@ -90,7 +126,26 @@ class ControlTemperaturaController extends Controller
         $registro = ControlTemperatura::findOrFail($id);
         $registro->delete();
 
-        return redirect()->route('admin.temperaturas.index')
-            ->with('success', 'Registro eliminado correctamente.');
+        return redirect()->route($this->routeByRole())->with('success', 'Registro eliminado correctamente.');
+    }
+
+    /**
+     * Determinar ruta de redirección por rol.
+     */
+    private function routeByRole()
+    {
+        if (Auth::user()->hasRole('admin')) {
+            return 'admin.temperaturas.index';
+        }
+
+        if (Auth::user()->hasRole('administrador de bodega')) {
+            return 'bodega.temperaturas.index';
+        }
+
+        if (Auth::user()->hasRole('bodeguero')) {
+            return 'bodeguero.temperaturas.index';
+        }
+
+        abort(403);
     }
 }

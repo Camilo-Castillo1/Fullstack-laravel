@@ -15,13 +15,38 @@ class SalidaInventarioController extends Controller
             ->orderBy('fecha_movimiento', 'desc')
             ->get();
 
-        return view('salidas.index', compact('salidas'));
+        if (Auth::user()->hasRole('admin')) {
+            return view('salidas.index', compact('salidas'));
+        }
+
+        if (Auth::user()->hasRole('administrador de bodega')) {
+            return view('bodega.salidas.index', compact('salidas'));
+        }
+
+        if (Auth::user()->hasRole('bodeguero')) {
+            return view('bodeguero.salidas.index', compact('salidas'));
+        }
+
+        abort(403);
     }
 
     public function create()
     {
         $lotes = Lote::with('producto')->get();
-        return view('salidas.create', compact('lotes'));
+
+        if (Auth::user()->hasRole('admin')) {
+            return view('salidas.create', compact('lotes'));
+        }
+
+        if (Auth::user()->hasRole('administrador de bodega')) {
+            return view('bodega.salidas.create', compact('lotes'));
+        }
+
+        if (Auth::user()->hasRole('bodeguero')) {
+            return view('bodeguero.salidas.create', compact('lotes'));
+        }
+
+        abort(403);
     }
 
     public function store(Request $request)
@@ -43,13 +68,15 @@ class SalidaInventarioController extends Controller
 
         SalidaInventario::create([
             'lote_id' => $request->lote_id,
-            'usuario_id' => Auth::user()->getKey(),
+            'usuario_id' =>Auth::user()->getKey(),
             'cantidad' => $request->cantidad,
             'motivo' => $request->motivo,
             'fecha_movimiento' => now(),
         ]);
 
-        return redirect()->route('admin.salidas.index')->with('success', 'Salida registrada y stock actualizado.');
+        $redirectRoute = $this->resolveRouteByRole();
+
+        return redirect()->route($redirectRoute)->with('success', 'Salida registrada y stock actualizado.');
     }
 
     public function edit($id)
@@ -57,7 +84,19 @@ class SalidaInventarioController extends Controller
         $salida = SalidaInventario::findOrFail($id);
         $lotes = Lote::with('producto')->get();
 
-        return view('salidas.edit', compact('salida', 'lotes'));
+        if (Auth::user()->hasRole('admin')) {
+            return view('salidas.edit', compact('salida', 'lotes'));
+        }
+
+        if (Auth::user()->hasRole('administrador de bodega')) {
+            return view('bodega.salidas.edit', compact('salida', 'lotes'));
+        }
+
+        if (Auth::user()->hasRole('bodeguero')) {
+            return view('bodeguero.salidas.edit', compact('salida', 'lotes'));
+        }
+
+        abort(403);
     }
 
     public function update(Request $request, $id)
@@ -92,7 +131,9 @@ class SalidaInventarioController extends Controller
             'fecha_movimiento' => now(),
         ]);
 
-        return redirect()->route('admin.salidas.index')->with('success', 'Salida actualizada y stock ajustado.');
+        $redirectRoute = $this->resolveRouteByRole();
+
+        return redirect()->route($redirectRoute)->with('success', 'Salida actualizada y stock ajustado.');
     }
 
     public function destroy($id)
@@ -105,6 +146,28 @@ class SalidaInventarioController extends Controller
 
         $salida->delete();
 
-        return redirect()->route('admin.salidas.index')->with('success', 'Salida eliminada y stock restaurado.');
+        $redirectRoute = $this->resolveRouteByRole();
+
+        return redirect()->route($redirectRoute)->with('success', 'Salida eliminada y stock restaurado.');
+    }
+
+    /**
+     * Determina la ruta de redirección por rol.
+     */
+    private function resolveRouteByRole()
+    {
+        if (Auth::user()->hasRole('admin')) {
+            return 'admin.salidas.index';
+        }
+
+        if (Auth::user()->hasRole('administrador de bodega')) {
+            return 'bodega.salidas.index';
+        }
+
+        if (Auth::user()->hasRole('bodeguero')) {
+            return 'bodeguero.salidas.index';
+        }
+
+        abort(403);
     }
 }

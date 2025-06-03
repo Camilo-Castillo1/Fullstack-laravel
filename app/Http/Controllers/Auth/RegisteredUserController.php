@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,11 +27,8 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // 🔐 Verificar si ya existe un usuario con el rol admin
-        $adminExists = Role::where('name', 'admin')
-            ->first()
-            ?->users()
-            ->exists();
+        // Verificar si ya existe un usuario con rol admin
+        $adminExists = Role::where('name', 'admin')->first()?->users()->exists();
 
         if ($adminExists) {
             return redirect()->route('login')->withErrors([
@@ -40,7 +36,7 @@ class RegisteredUserController extends Controller
             ]);
         }
 
-        // 🛡 Validación
+        // Validación
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
@@ -49,7 +45,7 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        // 🧠 Crear usuario
+        // Crear usuario
         $user = User::create([
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
@@ -59,7 +55,7 @@ class RegisteredUserController extends Controller
             'estado' => 'activo',
         ]);
 
-        // ✅ Crear rol 'admin' si no existe
+        // Crear rol admin si no existe
         if (!Role::where('name', 'admin')->exists()) {
             Role::create([
                 'name' => 'admin',
@@ -67,13 +63,19 @@ class RegisteredUserController extends Controller
             ]);
         }
 
-        // ✅ Asignar rol 'admin' al primer usuario creado desde el registro
+        // Asignar rol admin al primer usuario
         $user->assignRole('admin');
 
-        // 🔔 Evento y login automático
+        // Login automático y evento
         event(new Registered($user));
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // Redirigir según rol
+        return redirect()->intended(route(match (true) {
+            $user->hasRole('admin') => 'admin.dashboard',
+            $user->hasRole('administrador de bodega') => 'bodega.landing',
+            $user->hasRole('bodeguero') => 'bodeguero.productos.index',
+            default => 'welcome',
+        }));
     }
 }

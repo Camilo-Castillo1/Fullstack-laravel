@@ -87,6 +87,11 @@
                 <i class="bi bi-pin-map-fill me-2"></i> Lote por Ubicación
             </a>
         </li>
+        <li>
+            <a href="{{ route('admin.reportes.index') }}" class="nav-link text-white {{ request()->routeIs('admin.reportes.*') ? 'active' : '' }}">
+                <i class="bi bi-clipboard-text me-2"></i> Reportes del Bodeguero
+            </a>
+        </li>
     </ul>
 </div>
 @endrole

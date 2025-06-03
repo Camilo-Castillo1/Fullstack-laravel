@@ -36,6 +36,7 @@
                                 <th>Categoría</th>
                                 <th>Precio</th>
                                 <th>Stock Mínimo</th>
+                                <th>Stock Actual</th> {{-- NUEVA COLUMNA --}}
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -49,6 +50,14 @@
                                     <td>{{ $producto->categoria->nombre }}</td>
                                     <td class="text-end">${{ number_format($producto->precio_unitario, 2) }}</td>
                                     <td class="text-center">{{ $producto->stock_minimo }}</td>
+
+                                    {{-- Stock en tiempo real --}}
+                                    <td class="text-center">
+                                        <span class="badge bg-{{ $producto->stock <= $producto->stock_minimo ? 'danger' : 'info' }}">
+                                            {{ $producto->stock }}
+                                        </span>
+                                    </td>
+
                                     <td class="text-center">
                                         <span class="badge bg-{{ $producto->estado === 'activo' ? 'success' : 'secondary' }}">
                                             {{ ucfirst($producto->estado) }}
